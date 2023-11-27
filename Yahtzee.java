@@ -1,7 +1,7 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Yahtzee extends jFrame{
+public class Yahtzee extends JFrame{
 
     public Yahtzee() {
         // Create a new JFrame
