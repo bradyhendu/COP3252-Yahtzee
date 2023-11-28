@@ -16,6 +16,8 @@ public class Yahtzee extends JFrame{
         
         //Create new panel for buttons
         JPanel buttonPanel = new JPanel();
+        //style buttonPanel
+        buttonPanel.setBackground(new Color(34, 139, 34));
         //Create new panel for dice
         JPanel dicePanel = new JPanel();
         //Create new panel for scorecard
@@ -29,6 +31,7 @@ public class Yahtzee extends JFrame{
 
         // Add the panels to the main panel
         panel.add(buttonPanel, BorderLayout.SOUTH);
+
 
         // Add the panel to the frame
         frame.add(panel);
