@@ -17,6 +17,18 @@ public class Yahtzee{
     }
 }
 
+class GameLogic{
+
+    //TODO: IMPLEMENT SCORE CALCULATION
+    /*Score Calculation */
+
+    /*End Score Calculation*/
+
+
+
+    
+}
+
 class GameGUI extends JFrame{
     private JFrame frame;
     
@@ -30,29 +42,79 @@ class GameGUI extends JFrame{
     private JButton rulesButton;
     private JButton startButton;
     private JButton backButton; 
+    private JButton resetGameButton;
 
     private JLabel iconLabel;
 
-    private JEditorPane rulesPane;
+    private JEditorPane rulesPanel;
 
-    private JScrollPane scrollPane;
+    private JScrollPane scrollPanel;
 
-    //initializes all GUI components
+    //GAME LOGIC OBJECT
+    private GameLogic game = new GameLogic();
+
+    /*
+    * Initializes the GUI components so they are abled to be used in the program
+    */
     private void init(){
-        /*Start Button and Rule Button*/
+        /*Frame*/
+        frame = new JFrame("Yahtzee");
+        frame.setSize(800, 600);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        /*End Frame*/
+
+        /*Main Panel*/
         panel = new JPanel(new BorderLayout());
         panel.setBackground(new Color(128, 0, 32));
+        /*End Main Panel*/
   
 
-        //create buttons
+        /* Start Button and Rule Button*/
         rulesButton = new JButton("Rules");
         startButton = new JButton("Start Game");
- 
+
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            // Remove the title panel
+            panel.remove(titleButtonPanel);
+            panel.remove(iconLabel);
+            // Start the game
+            gameScreen();
+            //redraw the panel
+            frame.revalidate();
+            panel.repaint();
+
+            }
+        });
+
+        rulesButton.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+                // Remove the title panel
+                panel.remove(titleButtonPanel);
+                panel.remove(iconLabel);
+
+                // Add the scroll pane for rules page
+                panel.add(scrollPanel, BorderLayout.CENTER);
+                // Add the back button for rules page
+                panel.add(backButton, BorderLayout.NORTH);
+
+                //redraw the panel
+                frame.revalidate();
+                panel.repaint();
+           }
+        });
         /*End Start Button and Rule Button*/
 
         /*Title Button Panel */
         titleButtonPanel = new JPanel();
         titleButtonPanel.setBackground(new Color(128,0, 32));
+
+        // Add the buttons to the button panel
+        titleButtonPanel.add(startButton);
+        titleButtonPanel.add(rulesButton);
         /*End Title Button Panel */
 
         /*Image Label*/
@@ -75,127 +137,127 @@ class GameGUI extends JFrame{
         }
         /*End Image Label*/
 
-        /*Button Panel*/
-        //Create new panel for buttons
+        /*Dice Roll Panel*/
         diceRollPanel = new JPanel();
         //style buttonPanel
         diceRollPanel.setBackground(new Color(34, 139, 34));
-        //Create new panel for dice
+        diceRollPanel.setBorder(new EmptyBorder(10, 0, 10, 0)); // top, left, bottom, right
+        
 
-        //roll dice button
+        /*Roll Dice Button*/
         rollDice = new JButton("Roll Dice");
+        rollDice.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO: IMPLEMENT ROLL DICE BUTTON
+            }
+        });
+        /*End Roll Dice Button*/
+
+        /*Reset Game Button*/
+        resetGameButton = new JButton("Restart Game");
+        resetGameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO: IMPLEMENT RESET GAME BUTTON
+            }
+        });
+        /*End Reset Game Button*/
 
         // Add the buttons to the button panel
         diceRollPanel.add(rollDice);
-        /*End Button Panel*/
+        diceRollPanel.add(resetGameButton);
+        /*End Dice Roll Panel*/
 
-        
-    }
-    public GameGUI(){
-        // Create the frame
-        frame = new JFrame("Yahtzee");
-        frame.setSize(800, 600);
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        /*Score Panel*/
+        scorePanel = new JPanel();
+        //TODO: IMPLEMENT SCORE PANEL
+        /*End Score Panel*/
 
-        // Initialize the GUI components
-        init();
+        /*Dice Panel*/
+        dicePanel = new JPanel();
+        //TODO: IMPLEMENT DICE PANEL 
+        /*End Dice Panel*/
 
-        //load the title screen
-        titleScreen();
-    }
 
-    private void titleScreen(){
-        // Add the buttons to the button panel
-        titleButtonPanel.add(startButton);
-        titleButtonPanel.add(rulesButton);
-
-        // Add the image
-        panel.add(iconLabel, BorderLayout.NORTH);
-
-        // Add the panels to the main panel
-        panel.add(titleButtonPanel, BorderLayout.CENTER);
-
-        // Add the panel to the frame
-        frame.add(panel);
-
-        startButton.addActionListener(new ActionListener() {
+        /*Back Button*/
+        backButton = new JButton("Back to Main Menu");
+        //add action listener to button
+        backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            // Remove the title panel
-            panel.remove(titleButtonPanel);
-            panel.remove(iconLabel);
-            // Start the game
-            startGame();
-            //redraw the panel
-            frame.revalidate();
-            panel.repaint();
+                //remove the scroll pane
+                panel.remove(scrollPanel);
+                panel.remove(backButton);
+                //remove the dice roll panel
+                panel.remove(diceRollPanel);
 
-            }
-        });
-
-        rulesButton.addActionListener(new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent e) {
-                // Remove the title panel
-                panel.remove(titleButtonPanel);
-                panel.remove(iconLabel);
-                // Show the rules
-                showRules();
+                // Go back to the main menu
+                mainMenu();
                 //redraw the panel
                 frame.revalidate();
                 panel.repaint();
-           }
+            }
         });
+        /*End Back Button*/
 
-    }
-
-    private void startGame(){
-
-        // Add the panel to the main panel
-        panel.add(diceRollPanel, BorderLayout.SOUTH);
-
-        //Add the back button
-        backButton();
-
-
-        // Add the panel to the frame
-        frame.add(panel);
-
-        //redraw the panel
-        frame.revalidate();
-        panel.repaint();
-        
-    }
-
-    private void showRules(){
-        //Initiate the panel
-        rulesPane = new JEditorPane();
-        rulesPane.setEditable(false);
+        /*Rules Panel*/
+        rulesPanel = new JEditorPane();
+        rulesPanel.setEditable(false);
 
         //load the rules
         try {
             //TODO: HYPERLINKS' CAN'T BE CLICKED
 
-            rulesPane.setPage("https://grail.sourceforge.net/demo/yahtzee/rules.html"); 
+            rulesPanel.setPage("https://grail.sourceforge.net/demo/yahtzee/rules.html"); 
         } catch (IOException e) {
-            rulesPane.setContentType("text/html");
-            rulesPane.setText("<html>Could not load rules</html>");
+            rulesPanel.setContentType("text/html");
+            rulesPanel.setText("<html>Could not load rules</html>");
         }
+        /*End Rules Panel*/
 
-        //create a scroll pane and add the rules to it
-        scrollPane = new JScrollPane(rulesPane);
+        /*Scroll Pane */
+        scrollPanel = new JScrollPane(rulesPanel);
+        /*End Scroll Pane*/
 
-        //go back to the main menu
-        backButton();
-
-        panel.add(scrollPane, BorderLayout.CENTER);
 
     }
+    public GameGUI(){
+        init(); // Initialize the GUI components
+        titleScreen();//load the title screen
+    }
 
-    //Back to the title screen
+    /*
+     * Loads the different screens of the game to the Frane
+     */
+    //Loads the title screen
+    private void titleScreen(){
+        panel.add(iconLabel, BorderLayout.NORTH); // Add the image
+
+        panel.add(titleButtonPanel, BorderLayout.CENTER); // Add the panels to the main panel
+
+        frame.add(panel); // Add the panel to the frame
+    }
+
+    //Starts the game
+    private void gameScreen(){
+        panel.add(diceRollPanel, BorderLayout.SOUTH); // Add the dice roll panel to the main panel
+
+        panel.add(backButton, BorderLayout.NORTH); //add the back button to the panel
+
+        //TODO: ADD RESTART GAME BUTTON
+
+        frame.add(panel); // Add the panel to the frame
+
+        //TODO: ADD COMPLETED DICE PANEL AND SCORE PANEL TO THE MAIN PANEL
+
+        //redraw the panel
+        frame.revalidate();
+        panel.repaint();
+    }
+
+    //Loads the main menu
     private void mainMenu(){
-
         panel.add(titleButtonPanel, BorderLayout.CENTER);
         panel.add(iconLabel, BorderLayout.NORTH);
 
