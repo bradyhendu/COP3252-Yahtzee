@@ -32,6 +32,7 @@ class Game extends JFrame{
     private int[] diceValues = new int[5]; //for dice values
     private boolean[] diceRolling = new boolean[5]; //for toggle buttons
     private int rollCount = 0; //for roll count
+    private Random rand = new Random(); //for random number generation
 
 
 
@@ -58,11 +59,13 @@ class Game extends JFrame{
     private JToggleButton[] toggleButtons;
 
     private JLabel iconLabel;
-    private JLabel[] diceLabels;
 
     private JEditorPane rulesPanel;
 
     private JScrollPane scrollPanel;
+
+    //Dice Faces
+    private ImageIcon[] diceFaces;
 
     private Color green = new Color(34, 139, 34);
     private Color red = new Color(128, 0, 32);
@@ -155,26 +158,23 @@ class Game extends JFrame{
         /*End Image Label*/
 
         /*Dice Faces*/
-        diceLabels = new JLabel[5];
-        for(int i = 0; i < 5; i++){
+        diceFaces = new ImageIcon[6];
+        for(int i = 0; i < 6; i++){
             //Read the image file as follows: dice-i.png where i is the current index
             try {
                 File imageFile = new File("dice-" + (i + 1) + ".png");
                 BufferedImage originalImage = ImageIO.read(imageFile);
 
-                Image image = originalImage.getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+                Image image = originalImage.getScaledInstance(75, 75, Image.SCALE_DEFAULT);
 
                 // Create an ImageIcon
-                ImageIcon icon = new ImageIcon(image);
-
-                // Create assign the label to the diceLabels array
-                diceLabels[i] = new JLabel(icon);
+                diceFaces[i] = new ImageIcon(image);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
+
         /*End Dice Faces*/
 
         /*Dice Roll Panel*/
@@ -191,8 +191,23 @@ class Game extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 for(int i = 0; i < 5; i++){
-
+                    //remove previus dice face
+                    dice[i].removeAll();
+                    diceValues[i] = rand.nextInt(6) + 1;
+                    System.out.println("dice " + (i+1) + ":" + diceValues[i]);
+                    dice[i].add(new JLabel(diceFaces[diceValues[i] - 1]));
                 }
+                System.out.println("Roll Count: " + rollCount);
+
+                rollCount++;
+
+                /*if(rollCount == 3){
+                    rollDice.setEnabled(false);
+                }*/
+
+                //redraw the panel
+                frame.revalidate();
+                panel.repaint();
             }
         });
         /*End Roll Dice Button*/
@@ -234,7 +249,7 @@ class Game extends JFrame{
          for (int i = 0; i < 5; i++) {
             dice[i] = new JPanel();
             dice[i].setBackground(red);
-            dice[i].add(diceLabels[i]);
+            dice[i].add(new JLabel(diceFaces[i]));
             dicePanel.add(dice[i]);
         }
 
