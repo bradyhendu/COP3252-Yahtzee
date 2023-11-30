@@ -237,47 +237,58 @@ class Game extends JFrame{
 
         /*Score Panel*/
         scorePanel = new JPanel(new GridLayout(0, 2));
-        //set size of score panel
-        scorePanel.setPreferredSize(new Dimension(175, 175));
 
         // Create the labels and buttons
         JLabel onesLabel = new JLabel("Ones");
+        onesLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         JButton onesButton = new JButton("Score");
 
         JLabel twosLabel = new JLabel("Twos");
+        twosLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         JButton twosButton = new JButton("Score");
 
         JLabel threesLabel = new JLabel("Threes");
+        threesLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         JButton threesButton = new JButton("Score");
 
         JLabel foursLabel = new JLabel("Fours");
+        foursLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         JButton foursButton = new JButton("Score");
 
         JLabel fivesLabel = new JLabel("Fives");
+        fivesLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         JButton fivesButton = new JButton("Score");
 
         JLabel sixesLabel = new JLabel("Sixes");
+        sixesLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         JButton sixesButton = new JButton("Score");
 
         JLabel threeOfAKindLabel = new JLabel("Three of a Kind");
+        threeOfAKindLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         JButton threeOfAKindButton = new JButton("Score");
 
         JLabel fourOfAKindLabel = new JLabel("Four of a Kind");
+        fourOfAKindLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         JButton fourOfAKindButton = new JButton("Score");
 
         JLabel fullHouseLabel = new JLabel("Full House");
+        fullHouseLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         JButton fullHouseButton = new JButton("Score");
 
         JLabel smallStraightLabel = new JLabel("Small Straight");
+        smallStraightLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         JButton smallStraightButton = new JButton("Score");
 
         JLabel largeStraightLabel = new JLabel("Large Straight");
+        largeStraightLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         JButton largeStraightButton = new JButton("Score");
 
         JLabel yahtzeeLabel = new JLabel("Yahtzee");
+        yahtzeeLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         JButton yahtzeeButton = new JButton("Score");
 
         JLabel chanceLabel = new JLabel("Chance");
+        chanceLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         JButton chanceButton = new JButton("Score");
 
         // Add action listeners to buttons, calls the score method from game logic
@@ -462,7 +473,7 @@ class Game extends JFrame{
         //The purpose of this wrapper is to give the dice panel a border with better sizing
         diceWrapper = new JPanel();
         diceWrapper.setBackground(red);
-        diceWrapper.setBorder(new EmptyBorder(400, 50, 10, 50)); // top, left, bottom, right
+        diceWrapper.setBorder(new EmptyBorder(400, 50, 0, 50)); // top, left, bottom, right
         //change size to fit the dice panel
         diceWrapper.setPreferredSize(new Dimension(500, 500));
         diceWrapper.add(dicePanel);
