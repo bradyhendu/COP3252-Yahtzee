@@ -7,17 +7,19 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.swing.border.EmptyBorder;
+import java.util.Random;
+
 
 
 
 public class Yahtzee{
     public static void main(String[] args) {
-        GameGUI gameGUI = new GameGUI();
-        gameGUI.show();
+        Game game = new Game();
+        game.show();
     }
 }
 
-class GameLogic{
+class ScoreLogic{
 
     //TODO: IMPLEMENT SCORE CALCULATION
     /*Score Calculation */
@@ -25,7 +27,15 @@ class GameLogic{
     /*End Score Calculation*/    
 }
 
-class GameGUI extends JFrame{
+class Game extends JFrame{
+    //Variables
+    private int[] diceValues = new int[5]; //for dice values
+    private boolean[] diceRolling = new boolean[5]; //for toggle buttons
+    private int rollCount = 0; //for roll count
+
+
+
+    //GUI COMPONENTS
     private JFrame frame;
     
     private JPanel panel;
@@ -58,7 +68,7 @@ class GameGUI extends JFrame{
     private Color red = new Color(128, 0, 32);
 
     //GAME LOGIC OBJECT
-    private GameLogic game = new GameLogic();
+    private ScoreLogic score = new ScoreLogic();
 
     /*
     * Initializes the GUI components so they are abled to be used in the program
@@ -180,7 +190,9 @@ class GameGUI extends JFrame{
         rollDice.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: IMPLEMENT ROLL DICE BUTTON
+                for(int i = 0; i < 5; i++){
+
+                }
             }
         });
         /*End Roll Dice Button*/
@@ -307,7 +319,7 @@ class GameGUI extends JFrame{
 
 
     }
-    public GameGUI(){
+    public Game(){
         init(); // Initialize the GUI components
         titleScreen();//load the title screen
     }
