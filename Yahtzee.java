@@ -37,6 +37,7 @@ class GameGUI extends JFrame{
     private JPanel diceRollPanel;
     private JPanel scorePanel;
     private JPanel titleButtonPanel;
+    private JPanel backButtonPanel;
 
     private JButton rollDice;
     private JButton rulesButton;
@@ -99,7 +100,7 @@ class GameGUI extends JFrame{
                 // Add the scroll pane for rules page
                 panel.add(scrollPanel, BorderLayout.CENTER);
                 // Add the back button for rules page
-                panel.add(backButton, BorderLayout.NORTH);
+                panel.add(backButtonPanel, BorderLayout.NORTH);
 
                 //redraw the panel
                 frame.revalidate();
@@ -188,7 +189,7 @@ class GameGUI extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //remove the scroll pane
                 panel.remove(scrollPanel);
-                panel.remove(backButton);
+                panel.remove(backButtonPanel);
                 //remove the dice roll panel
                 panel.remove(diceRollPanel);
 
@@ -200,6 +201,17 @@ class GameGUI extends JFrame{
             }
         });
         /*End Back Button*/
+
+        /*Back Button Panel*/
+
+        backButtonPanel = new JPanel();
+
+        //style buttonPanel
+        backButtonPanel.setBackground(new Color(34, 139, 34));
+
+        // Add the buttons to the button panel
+        backButtonPanel.add(backButton);
+        /*End Back Button Panel*/
 
         /*Rules Panel*/
         rulesPanel = new JEditorPane();
@@ -243,10 +255,8 @@ class GameGUI extends JFrame{
     private void gameScreen(){
         panel.add(diceRollPanel, BorderLayout.SOUTH); // Add the dice roll panel to the main panel
 
-        panel.add(backButton, BorderLayout.NORTH); //add the back button to the panel
-
-        //TODO: ADD RESTART GAME BUTTON
-
+        panel.add(backButtonPanel, BorderLayout.NORTH); //add the back button to the panel
+        
         frame.add(panel); // Add the panel to the frame
 
         //TODO: ADD COMPLETED DICE PANEL AND SCORE PANEL TO THE MAIN PANEL
