@@ -48,6 +48,7 @@ class GameGUI extends JFrame{
     private JToggleButton[] toggleButtons;
 
     private JLabel iconLabel;
+    private JLabel[] diceLabels;
 
     private JEditorPane rulesPanel;
 
@@ -143,6 +144,29 @@ class GameGUI extends JFrame{
         }
         /*End Image Label*/
 
+        /*Dice Faces*/
+        diceLabels = new JLabel[5];
+        for(int i = 0; i < 5; i++){
+            //Read the image file as follows: dice-i.png where i is the current index
+            try {
+                File imageFile = new File("dice-" + (i + 1) + ".png");
+                BufferedImage originalImage = ImageIO.read(imageFile);
+
+                Image image = originalImage.getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+
+                // Create an ImageIcon
+                ImageIcon icon = new ImageIcon(image);
+
+                // Create assign the label to the diceLabels array
+                diceLabels[i] = new JLabel(icon);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        /*End Dice Faces*/
+
         /*Dice Roll Panel*/
         diceRollPanel = new JPanel();
         //style buttonPanel
@@ -197,16 +221,24 @@ class GameGUI extends JFrame{
         
          for (int i = 0; i < 5; i++) {
             dice[i] = new JPanel();
-            dice[i].setPreferredSize(new Dimension(25, 75));
-            dice[i].setBackground(green);
-            dice[i].setBorder(new EmptyBorder(50, 0, 0, 0));
+            dice[i].setBackground(red);
+            dice[i].add(diceLabels[i]);
             dicePanel.add(dice[i]);
         }
 
         for (int i = 0; i < 5; i++) {
             toggleButtons[i] = new JToggleButton("Stop Rolling");
             toggleButtons[i].setForeground(Color.BLACK); // Set text color
-            toggleButtons[i].setFont(new Font("Arial", Font.PLAIN, 14)); // Set font size
+            toggleButtons[i].setPreferredSize(new Dimension(125, 25)); // Set background color
+            
+            // Add action listener to button
+            toggleButtons[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    //TODO: IMPLEMENT TOGGLE BUTTONS
+                }
+            });
+
             dicePanel.add(toggleButtons[i]);
         }
         /*End Dice Panel*/
@@ -232,7 +264,7 @@ class GameGUI extends JFrame{
                 //remove the dice roll panel
                 panel.remove(diceRollPanel);
                 //remove the dice panel
-                panel.remove(dicePanel);
+                panel.remove(diceWrapper);
 
                 // Go back to the main menu
                 mainMenu();
