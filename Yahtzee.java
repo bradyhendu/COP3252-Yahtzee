@@ -22,11 +22,7 @@ class GameLogic{
     //TODO: IMPLEMENT SCORE CALCULATION
     /*Score Calculation */
 
-    /*End Score Calculation*/
-
-
-
-    
+    /*End Score Calculation*/    
 }
 
 class GameGUI extends JFrame{
@@ -256,7 +252,7 @@ class GameGUI extends JFrame{
         panel.add(diceRollPanel, BorderLayout.SOUTH); // Add the dice roll panel to the main panel
 
         panel.add(backButtonPanel, BorderLayout.NORTH); //add the back button to the panel
-        
+
         frame.add(panel); // Add the panel to the frame
 
         //TODO: ADD COMPLETED DICE PANEL AND SCORE PANEL TO THE MAIN PANEL
