@@ -79,7 +79,7 @@ class Game extends JFrame{
     private void init(){
         /*Frame*/
         frame = new JFrame("Yahtzee");
-        frame.setSize(800, 600);
+        frame.setSize(1000, 800);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*End Frame*/
@@ -151,7 +151,7 @@ class Game extends JFrame{
             // Create a label with the image 
             iconLabel = new JLabel(icon);
             // Add padding to the top of the image
-            iconLabel.setBorder(new EmptyBorder(50, 0, 0, 0)); // top, left, bottom, right
+            iconLabel.setBorder(new EmptyBorder(150, 0, 0, 0)); // top, left, bottom, right
         } catch (IOException e) {
            e.printStackTrace();
         }
@@ -236,8 +236,181 @@ class Game extends JFrame{
         /*End Dice Roll Panel*/
 
         /*Score Panel*/
-        scorePanel = new JPanel();
-        //TODO: IMPLEMENT SCORE PANEL
+        scorePanel = new JPanel(new GridLayout(0, 2));
+        //set size of score panel
+        scorePanel.setPreferredSize(new Dimension(175, 175));
+
+        // Create the labels and buttons
+        JLabel onesLabel = new JLabel("Ones");
+        JButton onesButton = new JButton("Score");
+
+        JLabel twosLabel = new JLabel("Twos");
+        JButton twosButton = new JButton("Score");
+
+        JLabel threesLabel = new JLabel("Threes");
+        JButton threesButton = new JButton("Score");
+
+        JLabel foursLabel = new JLabel("Fours");
+        JButton foursButton = new JButton("Score");
+
+        JLabel fivesLabel = new JLabel("Fives");
+        JButton fivesButton = new JButton("Score");
+
+        JLabel sixesLabel = new JLabel("Sixes");
+        JButton sixesButton = new JButton("Score");
+
+        JLabel threeOfAKindLabel = new JLabel("Three of a Kind");
+        JButton threeOfAKindButton = new JButton("Score");
+
+        JLabel fourOfAKindLabel = new JLabel("Four of a Kind");
+        JButton fourOfAKindButton = new JButton("Score");
+
+        JLabel fullHouseLabel = new JLabel("Full House");
+        JButton fullHouseButton = new JButton("Score");
+
+        JLabel smallStraightLabel = new JLabel("Small Straight");
+        JButton smallStraightButton = new JButton("Score");
+
+        JLabel largeStraightLabel = new JLabel("Large Straight");
+        JButton largeStraightButton = new JButton("Score");
+
+        JLabel yahtzeeLabel = new JLabel("Yahtzee");
+        JButton yahtzeeButton = new JButton("Score");
+
+        JLabel chanceLabel = new JLabel("Chance");
+        JButton chanceButton = new JButton("Score");
+
+        // Add action listeners to buttons, calls the score method from game logic
+        onesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+            }
+        });
+
+        twosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+            }
+        });
+
+        threesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+            }
+        });
+
+        foursButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+            }
+        });
+
+        fivesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+            }
+        });
+
+        sixesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+            }
+        });
+
+        threeOfAKindButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+            }
+        });
+
+        fourOfAKindButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+            }
+        });
+
+        fullHouseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+            }
+        });
+
+        smallStraightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+            }
+        });
+
+        largeStraightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+            }
+        });
+
+        yahtzeeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+            }
+        });
+
+        chanceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            
+            }
+        });
+
+        // Add the labels and buttons to the score panel
+        scorePanel.add(onesLabel);
+        scorePanel.add(onesButton);
+
+        scorePanel.add(twosLabel);
+        scorePanel.add(twosButton);
+
+        scorePanel.add(threesLabel);
+        scorePanel.add(threesButton);
+
+        scorePanel.add(foursLabel);
+        scorePanel.add(foursButton);
+
+        scorePanel.add(fivesLabel);
+        scorePanel.add(fivesButton);
+
+        scorePanel.add(sixesLabel);
+        scorePanel.add(sixesButton);
+
+        scorePanel.add(threeOfAKindLabel);
+        scorePanel.add(threeOfAKindButton);
+
+        scorePanel.add(fourOfAKindLabel);
+        scorePanel.add(fourOfAKindButton);
+
+        scorePanel.add(fullHouseLabel);
+        scorePanel.add(fullHouseButton);
+
+        scorePanel.add(smallStraightLabel);
+        scorePanel.add(smallStraightButton);
+
+        scorePanel.add(largeStraightLabel);
+        scorePanel.add(largeStraightButton);
+
+        scorePanel.add(yahtzeeLabel);
+        scorePanel.add(yahtzeeButton);
+
+        scorePanel.add(chanceLabel);
+        scorePanel.add(chanceButton);
         /*End Score Panel*/
 
         /*Dice*/
@@ -289,7 +462,9 @@ class Game extends JFrame{
         //The purpose of this wrapper is to give the dice panel a border with better sizing
         diceWrapper = new JPanel();
         diceWrapper.setBackground(red);
-        diceWrapper.setBorder(new EmptyBorder(250, 0, 10, 0)); // top, left, bottom, right
+        diceWrapper.setBorder(new EmptyBorder(400, 50, 10, 50)); // top, left, bottom, right
+        //change size to fit the dice panel
+        diceWrapper.setPreferredSize(new Dimension(500, 500));
         diceWrapper.add(dicePanel);
         /*End Dice Wrapper*/
 
@@ -300,13 +475,8 @@ class Game extends JFrame{
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //remove the scroll pane
-                panel.remove(scrollPanel);
-                panel.remove(backButtonPanel);
-                //remove the dice roll panel
-                panel.remove(diceRollPanel);
-                //remove the dice panel
-                panel.remove(diceWrapper);
+                //remove all components from the panel
+                panel.removeAll();
 
                 // Go back to the main menu
                 mainMenu();
@@ -318,7 +488,6 @@ class Game extends JFrame{
         /*End Back Button*/
 
         /*Back Button Panel*/
-
         backButtonPanel = new JPanel();
 
         //style buttonPanel
@@ -351,20 +520,15 @@ class Game extends JFrame{
     }
     public Game(){
         init(); // Initialize the GUI components
-        titleScreen();//load the title screen
+        mainMenu();//load the title screen
+
+        // Add the panel to the frame
+        frame.add(panel);
     }
 
     /*
      * Loads the different screens of the game to the Frane
      */
-    //Loads the title screen
-    private void titleScreen(){
-        panel.add(iconLabel, BorderLayout.NORTH); // Add the image
-
-        panel.add(titleButtonPanel, BorderLayout.CENTER); // Add the panels to the main panel
-
-        frame.add(panel); // Add the panel to the frame
-    }
 
     //Starts the game
     private void gameScreen(){
@@ -374,6 +538,8 @@ class Game extends JFrame{
         panel.add(backButtonPanel, BorderLayout.NORTH); //add the back button to the panel
 
         panel.add(diceWrapper, BorderLayout.CENTER); // Add the dice panel to the main panel
+
+        panel.add(scorePanel, BorderLayout.EAST); // Add the score panel to the main panel
 
         // Add the panel to the frame
         frame.add(panel); 
