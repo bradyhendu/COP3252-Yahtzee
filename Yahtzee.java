@@ -190,14 +190,22 @@ class Game extends JFrame{
         rollDice.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for(int i = 0; i < 5; i++){
-                    //remove previus dice face
-                    dice[i].removeAll();
-                    diceValues[i] = rand.nextInt(6) + 1;
-                    System.out.println("dice " + (i+1) + ":" + diceValues[i]);
-                    dice[i].add(new JLabel(diceFaces[diceValues[i] - 1]));
+                //When the dice is rolled for the first time, enable the toggle buttons
+                if(rollCount == 0){
+                    for(int i = 0; i < 5; i++){
+                        toggleButtons[i].setEnabled(true);
+                    }
                 }
-                System.out.println("Roll Count: " + rollCount);
+
+                //Change the dice values
+                for(int i = 0; i < 5; i++){
+                    if(diceRolling[i] == false){
+                        //remove previus dice face
+                        dice[i].removeAll();
+                        diceValues[i] = rand.nextInt(6) + 1;
+                        dice[i].add(new JLabel(diceFaces[diceValues[i] - 1]));
+                    }
+                }
 
                 rollCount++;
 
@@ -254,19 +262,26 @@ class Game extends JFrame{
         }
 
         for (int i = 0; i < 5; i++) {
-            toggleButtons[i] = new JToggleButton("Stop Rolling");
-            toggleButtons[i].setForeground(Color.BLACK); // Set text color
-            toggleButtons[i].setPreferredSize(new Dimension(125, 25)); // Set background color
-            
+            final int index = i;
+            toggleButtons[index] = new JToggleButton("Stop Rolling");
+            toggleButtons[index].setForeground(Color.BLACK); // Set text color
+            toggleButtons[index].setPreferredSize(new Dimension(125, 25)); // Set background color
+
+            if(rollCount == 0){
+                toggleButtons[index].setEnabled(false);
+            }
+
             // Add action listener to button
-            toggleButtons[i].addActionListener(new ActionListener() {
+            toggleButtons[index].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //TODO: IMPLEMENT TOGGLE BUTTONS
+                    //when the button is clicked, toggle the boolean value
+                    diceRolling[index] = !diceRolling[index];
                 }
             });
 
-            dicePanel.add(toggleButtons[i]);
+
+            dicePanel.add(toggleButtons[index]);
         }
         /*End Dice Panel*/
 
