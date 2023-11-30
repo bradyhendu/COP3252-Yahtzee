@@ -21,10 +21,29 @@ public class Yahtzee{
 
 class ScoreLogic{
 
-    //TODO: IMPLEMENT SCORE CALCULATION
-    /*Score Calculation */
+    //Variables
 
-    /*End Score Calculation*/    
+
+    /*Score Ones*/
+    public int scoreOnes(int[] diceValues){
+        int score = 0;
+        for(int i = 0; i < 5; i++){
+            if(diceValues[i] == 1){
+                score += 1;
+            }
+        }
+        return score;
+    }
+
+    /*Score Twos*/
+
+    /*Score Threes*/
+
+
+    //TODO: IMPLEMENT SCORE CALCULATION
+    /*Total Score Calculation */
+
+    /*Total End Score Calculation*/    
 }
 
 class Game extends JFrame{
@@ -33,6 +52,11 @@ class Game extends JFrame{
     private boolean[] diceRolling = new boolean[5]; //for toggle buttons
     private int rollCount = 0; //for roll count
     private Random rand = new Random(); //for random number generation
+    private int[] scoreValues = new int[13]; //for score values
+    private int turns = 0; //for turns
+
+    private boolean[] scoreButtons = new boolean[13]; //for score buttons
+
 
 
 
@@ -54,7 +78,19 @@ class Game extends JFrame{
     private JButton backButton; 
     private JButton resetGameButton;
 
-
+    private JButton onesButton;
+    private JButton twosButton;
+    private JButton threesButton;
+    private JButton foursButton;
+    private JButton fivesButton;
+    private JButton sixesButton;
+    private JButton threeOfAKindButton;
+    private JButton fourOfAKindButton;
+    private JButton fullHouseButton;
+    private JButton smallStraightButton;
+    private JButton largeStraightButton;
+    private JButton yahtzeeButton;
+    private JButton chanceButton;
 
     private JToggleButton[] toggleButtons;
 
@@ -92,7 +128,7 @@ class Game extends JFrame{
 
         /* Start Button and Rule Button*/
         rulesButton = new JButton("Rules");
-        startButton = new JButton("Start Game");
+        startButton = new JButton("Play Game");
 
         startButton.addActionListener(new ActionListener() {
             @Override
@@ -195,6 +231,7 @@ class Game extends JFrame{
                     for(int i = 0; i < 5; i++){
                         toggleButtons[i].setEnabled(true);
                     }
+                    toggleScoreButtonsOn();
                 }
 
                 //Change the dice values
@@ -209,9 +246,11 @@ class Game extends JFrame{
 
                 rollCount++;
 
-                /*if(rollCount == 3){
+                if(rollCount == 3){
                     rollDice.setEnabled(false);
-                }*/
+                    //Set Text of Roll Dice Button
+                    rollDice.setText("No Rolls Left, Score Roll");
+                }
 
                 //redraw the panel
                 frame.revalidate();
@@ -241,61 +280,70 @@ class Game extends JFrame{
         // Create the labels and buttons
         JLabel onesLabel = new JLabel("Ones");
         onesLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        JButton onesButton = new JButton("Score");
+        onesButton = new JButton("Score");
 
         JLabel twosLabel = new JLabel("Twos");
         twosLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        JButton twosButton = new JButton("Score");
+        twosButton = new JButton("Score");
 
         JLabel threesLabel = new JLabel("Threes");
         threesLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        JButton threesButton = new JButton("Score");
+        threesButton = new JButton("Score");
 
         JLabel foursLabel = new JLabel("Fours");
         foursLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        JButton foursButton = new JButton("Score");
+        foursButton = new JButton("Score");
 
         JLabel fivesLabel = new JLabel("Fives");
         fivesLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        JButton fivesButton = new JButton("Score");
+        fivesButton = new JButton("Score");
 
         JLabel sixesLabel = new JLabel("Sixes");
         sixesLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        JButton sixesButton = new JButton("Score");
+        sixesButton = new JButton("Score");
 
         JLabel threeOfAKindLabel = new JLabel("Three of a Kind");
         threeOfAKindLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        JButton threeOfAKindButton = new JButton("Score");
+        threeOfAKindButton = new JButton("Score");
 
         JLabel fourOfAKindLabel = new JLabel("Four of a Kind");
         fourOfAKindLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        JButton fourOfAKindButton = new JButton("Score");
+        fourOfAKindButton = new JButton("Score");
 
         JLabel fullHouseLabel = new JLabel("Full House");
         fullHouseLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        JButton fullHouseButton = new JButton("Score");
+        fullHouseButton = new JButton("Score");
 
         JLabel smallStraightLabel = new JLabel("Small Straight");
         smallStraightLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        JButton smallStraightButton = new JButton("Score");
+        smallStraightButton = new JButton("Score");
 
         JLabel largeStraightLabel = new JLabel("Large Straight");
         largeStraightLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        JButton largeStraightButton = new JButton("Score");
+        largeStraightButton = new JButton("Score");
 
         JLabel yahtzeeLabel = new JLabel("Yahtzee");
         yahtzeeLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        JButton yahtzeeButton = new JButton("Score");
+        yahtzeeButton = new JButton("Score");
 
         JLabel chanceLabel = new JLabel("Chance");
         chanceLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        JButton chanceButton = new JButton("Score");
+        chanceButton = new JButton("Score");
 
         // Add action listeners to buttons, calls the score method from game logic
         onesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            
+
+                //add the score to the scoreValues array
+                scoreValues[0] = score.scoreOnes(diceValues);
+
+                //change the text of the button to the score
+                onesButton.setText(Integer.toString(scoreValues[0]));
+
+                //disable the buttons
+                scoreButtons[0] = true;
+                handleButtons();
             }
         });
 
@@ -422,6 +470,9 @@ class Game extends JFrame{
 
         scorePanel.add(chanceLabel);
         scorePanel.add(chanceButton);
+
+        //disable the buttons
+        toggleScoreButtonsOff();
         /*End Score Panel*/
 
         /*Dice*/
@@ -575,4 +626,88 @@ class Game extends JFrame{
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+
+    //Toggle Score Buttons to unclickable
+    private void toggleScoreButtonsOff(){
+        onesButton.setEnabled(false);
+        twosButton.setEnabled(false);
+        threesButton.setEnabled(false);
+        foursButton.setEnabled(false);
+        fivesButton.setEnabled(false);
+        sixesButton.setEnabled(false);
+        threeOfAKindButton.setEnabled(false);
+        fourOfAKindButton.setEnabled(false);
+        fullHouseButton.setEnabled(false);
+        smallStraightButton.setEnabled(false);
+        largeStraightButton.setEnabled(false);
+        yahtzeeButton.setEnabled(false);
+        chanceButton.setEnabled(false);
+    }
+
+    //Toggle Score Buttons to clickable
+    private void toggleScoreButtonsOn(){
+        if(scoreButtons[0] == false){
+            onesButton.setEnabled(true);
+        }
+        if(scoreButtons[1] == false){
+            twosButton.setEnabled(true);
+        }
+        if(scoreButtons[2] == false){
+            threesButton.setEnabled(true);
+        }
+        if(scoreButtons[3] == false){
+            foursButton.setEnabled(true);
+        }
+        if(scoreButtons[4] == false){
+            fivesButton.setEnabled(true);
+        }
+        if(scoreButtons[5] == false){
+            sixesButton.setEnabled(true);
+        }
+        if(scoreButtons[6] == false){
+            threeOfAKindButton.setEnabled(true);
+        }
+        if(scoreButtons[7] == false){
+            fourOfAKindButton.setEnabled(true);
+        }
+        if(scoreButtons[8] == false){
+            fullHouseButton.setEnabled(true);
+        }
+        if(scoreButtons[9] == false){
+            smallStraightButton.setEnabled(true);
+        }
+        if(scoreButtons[10] == false){
+            largeStraightButton.setEnabled(true);
+        }
+        if(scoreButtons[11] == false){
+            yahtzeeButton.setEnabled(true);
+        }
+        if(scoreButtons[12] == false){
+            chanceButton.setEnabled(true);
+        }
+    }
+
+    //Handle Buttons on Scoring
+    private void handleButtons(){
+        toggleScoreButtonsOff();
+
+        //reset the roll count
+        rollCount = 0;
+
+        //toggle the toggle buttons off
+        for(int i = 0; i < 5; i++){
+            toggleButtons[i].setSelected(false);
+            toggleButtons[i].setEnabled(false);
+            diceRolling[i] = false;
+        }
+
+        //reset the roll dice button
+        rollDice.setEnabled(true);
+        rollDice.setText("Roll Dice");
+
+        //redraw the panel
+        frame.revalidate();
+        panel.repaint();
+    }
+
 }
