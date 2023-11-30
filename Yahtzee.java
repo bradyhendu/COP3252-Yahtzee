@@ -687,7 +687,7 @@ class Game extends JFrame{
         }
     }
 
-    //Handle Buttons on Scoring
+    //Handle Buttons on Scoring or Reset
     private void handleButtons(){
         toggleScoreButtonsOff();
 
