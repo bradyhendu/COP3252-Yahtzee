@@ -30,10 +30,12 @@ class GameGUI extends JFrame{
     
     private JPanel panel;
     private JPanel dicePanel;
+    private JPanel diceWrapper;
     private JPanel diceRollPanel;
     private JPanel scorePanel;
     private JPanel titleButtonPanel;
     private JPanel backButtonPanel;
+    private JPanel[] dice;
 
     private JButton rollDice;
     private JButton rulesButton;
@@ -41,11 +43,18 @@ class GameGUI extends JFrame{
     private JButton backButton; 
     private JButton resetGameButton;
 
+
+
+    private JToggleButton[] toggleButtons;
+
     private JLabel iconLabel;
 
     private JEditorPane rulesPanel;
 
     private JScrollPane scrollPanel;
+
+    private Color green = new Color(34, 139, 34);
+    private Color red = new Color(128, 0, 32);
 
     //GAME LOGIC OBJECT
     private GameLogic game = new GameLogic();
@@ -63,7 +72,7 @@ class GameGUI extends JFrame{
 
         /*Main Panel*/
         panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(128, 0, 32));
+        panel.setBackground(red);
         /*End Main Panel*/
   
 
@@ -107,7 +116,7 @@ class GameGUI extends JFrame{
 
         /*Title Button Panel */
         titleButtonPanel = new JPanel();
-        titleButtonPanel.setBackground(new Color(128,0, 32));
+        titleButtonPanel.setBackground(red);
 
         // Add the buttons to the button panel
         titleButtonPanel.add(startButton);
@@ -137,8 +146,9 @@ class GameGUI extends JFrame{
         /*Dice Roll Panel*/
         diceRollPanel = new JPanel();
         //style buttonPanel
-        diceRollPanel.setBackground(new Color(34, 139, 34));
+        diceRollPanel.setBackground(green);
         diceRollPanel.setBorder(new EmptyBorder(10, 0, 10, 0)); // top, left, bottom, right
+        /*End Dice Roll Panel*/
         
 
         /*Roll Dice Button*/
@@ -171,10 +181,43 @@ class GameGUI extends JFrame{
         //TODO: IMPLEMENT SCORE PANEL
         /*End Score Panel*/
 
+        /*Dice*/
+        dice = new JPanel[5];
+        /*End Dice*/
+        
+        /*Toggle Buttons*/
+        toggleButtons = new JToggleButton[5];
+        /*End Toggle Buttons*/
+
         /*Dice Panel*/
-        dicePanel = new JPanel();
-        //TODO: IMPLEMENT DICE PANEL 
+        dicePanel = new JPanel(new GridLayout(2, 5, 15, 15));
+        dicePanel.setBackground(red);
+        dicePanel.setSize(new Dimension(200, 200));
+
+        
+         for (int i = 0; i < 5; i++) {
+            dice[i] = new JPanel();
+            dice[i].setPreferredSize(new Dimension(25, 75));
+            dice[i].setBackground(green);
+            dice[i].setBorder(new EmptyBorder(50, 0, 0, 0));
+            dicePanel.add(dice[i]);
+        }
+
+        for (int i = 0; i < 5; i++) {
+            toggleButtons[i] = new JToggleButton("Stop Rolling");
+            toggleButtons[i].setForeground(Color.BLACK); // Set text color
+            toggleButtons[i].setFont(new Font("Arial", Font.PLAIN, 14)); // Set font size
+            dicePanel.add(toggleButtons[i]);
+        }
         /*End Dice Panel*/
+
+        /*Dice Wrapper*/
+        //The purpose of this wrapper is to give the dice panel a border with better sizing
+        diceWrapper = new JPanel();
+        diceWrapper.setBackground(red);
+        diceWrapper.setBorder(new EmptyBorder(250, 0, 10, 0)); // top, left, bottom, right
+        diceWrapper.add(dicePanel);
+        /*End Dice Wrapper*/
 
 
         /*Back Button*/
@@ -188,6 +231,8 @@ class GameGUI extends JFrame{
                 panel.remove(backButtonPanel);
                 //remove the dice roll panel
                 panel.remove(diceRollPanel);
+                //remove the dice panel
+                panel.remove(dicePanel);
 
                 // Go back to the main menu
                 mainMenu();
@@ -203,7 +248,7 @@ class GameGUI extends JFrame{
         backButtonPanel = new JPanel();
 
         //style buttonPanel
-        backButtonPanel.setBackground(new Color(34, 139, 34));
+        backButtonPanel.setBackground(green);
 
         // Add the buttons to the button panel
         backButtonPanel.add(backButton);
@@ -249,13 +294,15 @@ class GameGUI extends JFrame{
 
     //Starts the game
     private void gameScreen(){
+        //Panel Components
         panel.add(diceRollPanel, BorderLayout.SOUTH); // Add the dice roll panel to the main panel
 
         panel.add(backButtonPanel, BorderLayout.NORTH); //add the back button to the panel
 
-        frame.add(panel); // Add the panel to the frame
+        panel.add(diceWrapper, BorderLayout.CENTER); // Add the dice panel to the main panel
 
-        //TODO: ADD COMPLETED DICE PANEL AND SCORE PANEL TO THE MAIN PANEL
+        // Add the panel to the frame
+        frame.add(panel); 
 
         //redraw the panel
         frame.revalidate();
@@ -273,7 +320,8 @@ class GameGUI extends JFrame{
     }
 
     public void show(){
-        // Show the frame
+        // Show the frame at center
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 }
