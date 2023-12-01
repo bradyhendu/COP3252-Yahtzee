@@ -1077,6 +1077,19 @@ class Game extends JFrame{
         rollDice.setEnabled(true);
         rollDice.setText("Roll Dice");
 
+        //check if the game is over
+        if(turns == 13){
+            //calculate the total score
+            int total = score.totalScore(scoreValues);
+
+            //add button to go reset game in the option pane
+            Object[] options = {resetGameButton, backButton};
+
+            //display the total score
+            JOptionPane.showMessageDialog(frame, "Game Over! Your Total Score is: " + total, "Game Over", JOptionPane.PLAIN_MESSAGE);
+            
+        }
+
         //redraw the panel
         frame.revalidate();
         panel.repaint();
