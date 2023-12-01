@@ -264,7 +264,42 @@ class Game extends JFrame{
         resetGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO: IMPLEMENT RESET GAME BUTTON
+                //reset the dice values
+                for(int i = 0; i < 5; i++){
+                    dice[i].removeAll();
+                    dice[i].add(new JLabel(diceFaces[0]));
+                    diceValues[i] = 1;
+                }
+
+                //reset the score values
+                for(int i = 0; i < 13; i++){
+                    scoreValues[i] = 0;
+                }
+
+                //reset the score buttons text 
+                onesButton.setText("Score");
+                twosButton.setText("Score");
+                threesButton.setText("Score");
+                foursButton.setText("Score");
+                fivesButton.setText("Score");
+                sixesButton.setText("Score");
+                threeOfAKindButton.setText("Score");
+                fourOfAKindButton.setText("Score");
+                fullHouseButton.setText("Score");
+                smallStraightButton.setText("Score");
+                largeStraightButton.setText("Score");
+                yahtzeeButton.setText("Score");
+                chanceButton.setText("Score");
+
+                //reset turns
+                turns = 0;
+
+                //reset score button boolean values
+                for(int i = 0; i < 13; i++){
+                    scoreButtons[i] = false;
+                }
+
+                handleButtons();
             }
         });
         /*End Reset Game Button*/
@@ -343,6 +378,10 @@ class Game extends JFrame{
 
                 //disable the buttons
                 scoreButtons[0] = true;
+
+                //increment turns
+                turns++;
+
                 handleButtons();
             }
         });
