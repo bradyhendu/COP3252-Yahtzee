@@ -200,8 +200,13 @@ class ScoreLogic{
 
     //TODO: IMPLEMENT SCORE CALCULATION
     /*Total Score Calculation */
-
-    /*Total End Score Calculation*/
+    public int totalScore(int[] scoreValues){
+        int total = 0;
+        for(int i = 0; i < 13; i++){
+            total += scoreValues[i];
+        }
+        return total;
+    }
         
 }
 
@@ -458,7 +463,7 @@ class Game extends JFrame{
                     scoreButtons[i] = false;
                 }
 
-                handleButtons();
+                handleEndTurn();
             }
         });
         /*End Reset Game Button*/
@@ -541,7 +546,7 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                handleButtons();
+                handleEndTurn();
             }
         });
 
@@ -561,7 +566,7 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                handleButtons();
+                handleEndTurn();
             
             }
         });
@@ -582,7 +587,7 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                handleButtons();
+                handleEndTurn();
             
             }
         });
@@ -603,7 +608,7 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                handleButtons();
+                handleEndTurn();
             
             }
         });
@@ -624,7 +629,7 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                handleButtons();
+                handleEndTurn();
             
             }
         });
@@ -645,7 +650,7 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                handleButtons();
+                handleEndTurn();
             
             }
         });
@@ -666,7 +671,7 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                handleButtons();
+                handleEndTurn();
 
             
             }
@@ -688,7 +693,7 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                handleButtons();
+                handleEndTurn();
             
             }
         });
@@ -709,7 +714,7 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                handleButtons();
+                handleEndTurn();
             
             }
         });
@@ -730,7 +735,7 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                handleButtons();
+                handleEndTurn();
             
             }
         });
@@ -751,7 +756,7 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                handleButtons();
+                handleEndTurn();
             
             }
         });
@@ -772,7 +777,7 @@ class Game extends JFrame{
                     //increment turns
                     turns++;
     
-                    handleButtons();
+                    handleEndTurn();
             
             }
         });
@@ -793,7 +798,7 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                handleButtons();
+                handleEndTurn();
             
             }
         });
@@ -1055,7 +1060,7 @@ class Game extends JFrame{
     }
 
     //Handle Buttons on Scoring or Reset
-    private void handleButtons(){
+    private void handleEndTurn(){
         toggleScoreButtonsOff();
 
         //reset the roll count
