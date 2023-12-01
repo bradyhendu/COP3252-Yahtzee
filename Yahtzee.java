@@ -43,7 +43,8 @@ class ScoreLogic{
     //TODO: IMPLEMENT SCORE CALCULATION
     /*Total Score Calculation */
 
-    /*Total End Score Calculation*/    
+    /*Total End Score Calculation*/
+        
 }
 
 class Game extends JFrame{
