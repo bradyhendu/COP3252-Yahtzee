@@ -21,8 +21,6 @@ public class Yahtzee{
 
 class ScoreLogic{
 
-    //Variables
-
 
     /*Score Ones*/
     public int scoreOnes(int[] diceValues){
@@ -51,7 +49,7 @@ class ScoreLogic{
         int score = 0;
         for(int i = 0; i < 5; i++){
             if(diceValues[i] == 3){
-                score += 1;
+                score += 3;
             }
         }
         return score;
