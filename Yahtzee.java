@@ -36,8 +36,168 @@ class ScoreLogic{
     }
 
     /*Score Twos*/
+        public int scoreTwos(int[] diceValues){
+        int score = 0;
+        for(int i = 0; i < 5; i++){
+            if(diceValues[i] == 2){
+                score += 2;
+            }
+        }
+        return score;
+    }
 
     /*Score Threes*/
+        public int scoreThrees(int[] diceValues){
+        int score = 0;
+        for(int i = 0; i < 5; i++){
+            if(diceValues[i] == 3){
+                score += 1;
+            }
+        }
+        return score;
+    }
+    /*Score fours*/
+        public int scoreFours(int[] diceValues){
+        int score = 0;
+        for(int i = 0; i < 5; i++){
+            if(diceValues[i] == 4){
+                score += 4;
+            }
+        }
+        return score;
+    }
+    /*Score fives*/
+        public int scoreFives(int[] diceValues){
+        int score = 0;
+        for(int i = 0; i < 5; i++){
+            if(diceValues[i] == 5){
+                score += 5;
+            }
+        }
+        return score;
+    }
+    /*Score sixes*/
+        public int scoreSixes(int[] diceValues){
+        int score = 0;
+        for(int i = 0; i < 5; i++){
+            if(diceValues[i] == 6){
+                score += 6;
+            }
+        }
+        return score;
+    }
+    /*Score three of a kind*/
+        public int scoreThreeOfAKind(int[] diceValues){
+        int score = 0;
+        int[] diceCount = new int[6];
+        for(int i = 0; i < 5; i++){
+            diceCount[diceValues[i] - 1]++;
+        }
+        for(int i = 0; i < 6; i++){
+            if(diceCount[i] >= 3){
+                for(int j = 0; j < 5; j++){
+                    score += diceValues[j];
+                }
+            }
+        }
+        return score;
+    }
+    /*Score four of a kind*/
+        public int scoreFourOfAKind(int[] diceValues){
+        int score = 0;
+        int[] diceCount = new int[6];
+        for(int i = 0; i < 5; i++){
+            diceCount[diceValues[i] - 1]++;
+        }
+        for(int i = 0; i < 6; i++){
+            if(diceCount[i] >= 4){
+                for(int j = 0; j < 5; j++){
+                    score += diceValues[j];
+                }
+            }
+        }
+        return score;
+    }
+    /*Score full house*/
+        public int scoreFullHouse(int[] diceValues){
+        int score = 0;
+        int[] diceCount = new int[6];
+        for(int i = 0; i < 5; i++){
+            diceCount[diceValues[i] - 1]++;
+        }
+        boolean threeOfAKind = false;
+        boolean twoOfAKind = false;
+        for(int i = 0; i < 6; i++){
+            if(diceCount[i] == 3){
+                threeOfAKind = true;
+            }
+            if(diceCount[i] == 2){
+                twoOfAKind = true;
+            }
+        }
+        if(threeOfAKind == true && twoOfAKind == true){
+            score = 25;
+        }
+        return score;
+    }
+    /*Score small straight*/
+        public int scoreSmallStraight(int[] diceValues){
+        int score = 0;
+        int[] diceCount = new int[6];
+        for(int i = 0; i < 5; i++){
+            diceCount[diceValues[i] - 1]++;
+        }
+        int count = 0;
+        for(int i = 0; i < 6; i++){
+            if(diceCount[i] >= 1){
+                count++;
+            }
+        }
+        if(count >= 4){
+            score = 30;
+        }
+        return score;
+    }
+    /*Score large straight*/
+        public int scoreLargeStraight(int[] diceValues){
+        int score = 0;
+        int[] diceCount = new int[6];
+        for(int i = 0; i < 5; i++){
+            diceCount[diceValues[i] - 1]++;
+        }
+        int count = 0;
+        for(int i = 0; i < 6; i++){
+            if(diceCount[i] >= 1){
+                count++;
+            }
+        }
+        if(count == 5){
+            score = 40;
+        }
+        return score;
+    }
+    /*Score yahtzee*/
+        public int scoreYahtzee(int[] diceValues){
+        int score = 0;
+        int[] diceCount = new int[6];
+        for(int i = 0; i < 5; i++){
+            diceCount[diceValues[i] - 1]++;
+        }
+        for(int i = 0; i < 6; i++){
+            if(diceCount[i] == 5){
+                score = 50;
+            }
+        }
+        return score;
+    }
+    /*Score chance*/
+        public int scoreChance(int[] diceValues){
+        int score = 0;
+        for(int i = 0; i < 5; i++){
+            score += diceValues[i];
+        }
+        return score;
+    }
 
 
     //TODO: IMPLEMENT SCORE CALCULATION
@@ -390,6 +550,20 @@ class Game extends JFrame{
         twosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //add the score to the scoreValues array
+                scoreValues[1] = score.scoreTwos(diceValues);
+
+                //change the text of the button to the score
+                twosButton.setText(Integer.toString(scoreValues[1]));
+
+                //disable the buttons
+                scoreButtons[1] = true;
+
+                //increment turns
+                turns++;
+
+                handleButtons();
             
             }
         });
@@ -397,6 +571,20 @@ class Game extends JFrame{
         threesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //add the score to the scoreValues array
+                scoreValues[2] = score.scoreThrees(diceValues);
+
+                //change the text of the button to the score
+                threesButton.setText(Integer.toString(scoreValues[2]));
+
+                //disable the buttons
+                scoreButtons[2] = true;
+
+                //increment turns
+                turns++;
+
+                handleButtons();
             
             }
         });
@@ -404,6 +592,20 @@ class Game extends JFrame{
         foursButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //add the score to the scoreValues array
+                scoreValues[3] = score.scoreFours(diceValues);
+
+                //change the text of the button to the score
+                foursButton.setText(Integer.toString(scoreValues[3]));
+
+                //disable the buttons
+                scoreButtons[3] = true;
+
+                //increment turns
+                turns++;
+
+                handleButtons();
             
             }
         });
@@ -411,6 +613,20 @@ class Game extends JFrame{
         fivesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //add the score to the scoreValues array
+                scoreValues[4] = score.scoreFives(diceValues);
+
+                //change the text of the button to the score
+                fivesButton.setText(Integer.toString(scoreValues[4]));
+
+                //disable the buttons
+                scoreButtons[4] = true;
+
+                //increment turns
+                turns++;
+
+                handleButtons();
             
             }
         });
@@ -418,6 +634,20 @@ class Game extends JFrame{
         sixesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //add the score to the scoreValues array
+                scoreValues[5] = score.scoreSixes(diceValues);
+
+                //change the text of the button to the score
+                sixesButton.setText(Integer.toString(scoreValues[5]));
+
+                //disable the buttons
+                scoreButtons[5] = true;
+
+                //increment turns
+                turns++;
+
+                handleButtons();
             
             }
         });
@@ -425,6 +655,21 @@ class Game extends JFrame{
         threeOfAKindButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //add the score to the scoreValues array
+                scoreValues[6] = score.scoreThreeOfAKind(diceValues);
+
+                //change the text of the button to the score
+                threeOfAKindButton.setText(Integer.toString(scoreValues[6]));
+
+                //disable the buttons
+                scoreButtons[6] = true;
+
+                //increment turns
+                turns++;
+
+                handleButtons();
+
             
             }
         });
@@ -432,6 +677,20 @@ class Game extends JFrame{
         fourOfAKindButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //add the score to the scoreValues array
+                scoreValues[7] = score.scoreFourOfAKind(diceValues);
+
+                //change the text of the button to the score
+                fourOfAKindButton.setText(Integer.toString(scoreValues[7]));
+
+                //disable the buttons
+                scoreButtons[7] = true;
+
+                //increment turns
+                turns++;
+
+                handleButtons();
             
             }
         });
@@ -439,6 +698,20 @@ class Game extends JFrame{
         fullHouseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //add the score to the scoreValues array
+                scoreValues[8] = score.scoreFullHouse(diceValues);
+
+                //change the text of the button to the score
+                fullHouseButton.setText(Integer.toString(scoreValues[8]));
+
+                //disable the buttons
+                scoreButtons[8] = true;
+
+                //increment turns
+                turns++;
+
+                handleButtons();
             
             }
         });
@@ -446,6 +719,20 @@ class Game extends JFrame{
         smallStraightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //add the score to the scoreValues array
+                scoreValues[9] = score.scoreSmallStraight(diceValues);
+
+                //change the text of the button to the score
+                smallStraightButton.setText(Integer.toString(scoreValues[9]));
+
+                //disable the buttons
+                scoreButtons[9] = true;
+
+                //increment turns
+                turns++;
+
+                handleButtons();
             
             }
         });
@@ -453,6 +740,20 @@ class Game extends JFrame{
         largeStraightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //add the score to the scoreValues array
+                scoreValues[10] = score.scoreLargeStraight(diceValues);
+
+                //change the text of the button to the score
+                largeStraightButton.setText(Integer.toString(scoreValues[10]));
+
+                //disable the buttons
+                scoreButtons[10] = true;
+
+                //increment turns
+                turns++;
+
+                handleButtons();
             
             }
         });
@@ -460,6 +761,20 @@ class Game extends JFrame{
         yahtzeeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                    
+                    //add the score to the scoreValues array
+                    scoreValues[11] = score.scoreYahtzee(diceValues);
+    
+                    //change the text of the button to the score
+                    yahtzeeButton.setText(Integer.toString(scoreValues[11]));
+    
+                    //disable the buttons
+                    scoreButtons[11] = true;
+    
+                    //increment turns
+                    turns++;
+    
+                    handleButtons();
             
             }
         });
@@ -467,6 +782,20 @@ class Game extends JFrame{
         chanceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //add the score to the scoreValues array
+                scoreValues[12] = score.scoreChance(diceValues);
+
+                //change the text of the button to the score
+                chanceButton.setText(Integer.toString(scoreValues[12]));
+
+                //disable the buttons
+                scoreButtons[12] = true;
+
+                //increment turns
+                turns++;
+
+                handleButtons();
             
             }
         });
