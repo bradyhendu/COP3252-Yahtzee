@@ -6,8 +6,12 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URISyntaxException;
+
 import javax.swing.border.EmptyBorder;
 import java.util.Random;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 
 
@@ -210,7 +214,7 @@ class ScoreLogic{
         }
 
         //TODO: YAHTZEE BONUS
-        
+
         return total;
     }
         
@@ -943,16 +947,27 @@ class Game extends JFrame{
         /*Rules Panel*/
         rulesPanel = new JEditorPane();
         rulesPanel.setEditable(false);
+        rulesPanel.setContentType("text/html");
 
         //load the rules
         try {
-            //TODO: HYPERLINKS' CAN'T BE CLICKED
-
             rulesPanel.setPage("https://grail.sourceforge.net/demo/yahtzee/rules.html"); 
         } catch (IOException e) {
             rulesPanel.setContentType("text/html");
             rulesPanel.setText("<html>Could not load rules</html>");
         }
+        rulesPanel.addHyperlinkListener(new HyperlinkListener() {
+            @Override
+            public void hyperlinkUpdate(HyperlinkEvent e) {
+                if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+                    try {
+                        rulesPanel.setPage(e.getURL());
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
         /*End Rules Panel*/
 
         /*Scroll Pane */
