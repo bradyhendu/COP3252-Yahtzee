@@ -198,7 +198,6 @@ class ScoreLogic{
     }
 
 
-    //TODO: IMPLEMENT SCORE CALCULATION
     /*Total Score Calculation */
     public int totalScore(int[] scoreValues){
         int total = 0;
@@ -209,6 +208,9 @@ class ScoreLogic{
                 total += 35;
             }
         }
+
+        //TODO: YAHTZEE BONUS
+        
         return total;
     }
         
