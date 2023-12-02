@@ -204,6 +204,10 @@ class ScoreLogic{
         int total = 0;
         for(int i = 0; i < 13; i++){
             total += scoreValues[i];
+            //bonus
+            if(i == 5 && total >= 63){
+                total += 35;
+            }
         }
         return total;
     }
@@ -439,6 +443,9 @@ class Game extends JFrame{
                 for(int i = 0; i < 13; i++){
                     scoreValues[i] = 0;
                 }
+
+                //create a new score object
+                score = new ScoreLogic();
 
                 //reset the score buttons text 
                 onesButton.setText("Score");
