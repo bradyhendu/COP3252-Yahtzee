@@ -22,7 +22,8 @@ public class Yahtzee{
 }
 
 class ScoreLogic{
-
+    int yahtzeeBonus = 0;
+    int yahtzeeCount = 0;
 
     /*Score Ones*/
     public int scoreOnes(int[] diceValues){
@@ -138,6 +139,10 @@ class ScoreLogic{
         if(threeOfAKind == true && twoOfAKind == true){
             score = 25;
         }
+        if(yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
+            score = 25;
+            yahtzeeBonus += 100;
+        }
         return score;
     }
     /*Score small straight*/
@@ -155,6 +160,10 @@ class ScoreLogic{
         }
         if(count >= 4){
             score = 30;
+        }
+        if(yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
+            score = 30;
+            yahtzeeBonus += 100;
         }
         return score;
     }
@@ -174,6 +183,10 @@ class ScoreLogic{
         if(count == 5){
             score = 40;
         }
+        if(yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
+            score = 40;
+            yahtzeeBonus += 100;
+        }
         return score;
     }
     /*Score yahtzee*/
@@ -186,6 +199,8 @@ class ScoreLogic{
         for(int i = 0; i < 6; i++){
             if(diceCount[i] == 5){
                 score = 50;
+                //increment yahtzee count
+                yahtzeeCount++;
             }
         }
         return score;
@@ -211,7 +226,8 @@ class ScoreLogic{
             }
         }
 
-        //TODO: YAHTZEE BONUS
+        //yahtzee bonus
+        total += yahtzeeBonus;
 
         return total;
     }
