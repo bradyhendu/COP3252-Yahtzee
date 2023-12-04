@@ -6,8 +6,6 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URISyntaxException;
-
 import javax.swing.border.EmptyBorder;
 import java.util.Random;
 import javax.swing.event.HyperlinkEvent;
