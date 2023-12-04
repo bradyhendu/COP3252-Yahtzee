@@ -33,6 +33,11 @@ class ScoreLogic{
                 score += 1;
             }
         }
+
+        if(score != 0 && yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
+            yahtzeeBonus += 100;
+        }
+        
         return score;
     }
 
@@ -44,6 +49,11 @@ class ScoreLogic{
                 score += 2;
             }
         }
+
+        if(score != 0 && yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
+            yahtzeeBonus += 100;
+        }
+
         return score;
     }
 
@@ -55,6 +65,11 @@ class ScoreLogic{
                 score += 3;
             }
         }
+
+        if(score != 0 && yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
+            yahtzeeBonus += 100;
+        }
+
         return score;
     }
     /*Score fours*/
@@ -65,6 +80,9 @@ class ScoreLogic{
                 score += 4;
             }
         }
+        if(score != 0 && yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
+            yahtzeeBonus += 100;
+        }        
         return score;
     }
     /*Score fives*/
@@ -75,6 +93,9 @@ class ScoreLogic{
                 score += 5;
             }
         }
+        if(score != 0 && yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
+            yahtzeeBonus += 100;
+        }
         return score;
     }
     /*Score sixes*/
@@ -84,6 +105,9 @@ class ScoreLogic{
             if(diceValues[i] == 6){
                 score += 6;
             }
+        }
+        if(score != 0 && yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
+            yahtzeeBonus += 100;
         }
         return score;
     }
@@ -101,6 +125,9 @@ class ScoreLogic{
                 }
             }
         }
+        if(yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
+            yahtzeeBonus += 100;
+        }
         return score;
     }
     /*Score four of a kind*/
@@ -116,6 +143,9 @@ class ScoreLogic{
                     score += diceValues[j];
                 }
             }
+        }
+        if(yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
+            yahtzeeBonus += 100;
         }
         return score;
     }
