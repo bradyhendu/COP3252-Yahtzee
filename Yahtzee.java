@@ -1120,6 +1120,9 @@ class Game extends JFrame{
             //calculate the total score
             int total = score.totalScore(scoreValues);
 
+            //disable the roll dice button
+            rollDice.setEnabled(false);
+
             //display the total score
             JOptionPane.showMessageDialog(frame, "Game Over! Your Total Score is: " + total, "Game Over", JOptionPane.PLAIN_MESSAGE);
             
