@@ -1290,6 +1290,7 @@ class Game extends JFrame{
         panel.repaint();
     }
 
+    //On each roll, call this function to show the available scores
     private void showScore(){
         if(score.scoreOnes(diceValues) != 0 && scoreButtons[0] == false){
             onesButton.setText(Integer.toString(score.scoreOnes(diceValues)));
