@@ -464,6 +464,7 @@ class Game extends JFrame{
                 //show available scores
                 showScore();
 
+                
                 if(rollCount == 3){
                     rollDice.setEnabled(false);
                     //Set Text of Roll Dice Button
