@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import java.util.Random;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
+import java.util.HashMap;
 
 
 
@@ -22,13 +23,6 @@ public class Yahtzee{
 }
 
 class ScoreLogic{
-    int yahtzeeBonus = 0;
-    int yahtzeeCount = 0;
-
-    ScoreLogic(){
-        yahtzeeBonus = 0;
-        yahtzeeCount = 0;
-    }
 
     /*Score Ones*/
     public int scoreOnes(int[] diceValues){
@@ -38,8 +32,6 @@ class ScoreLogic{
                 score += 1;
             }
         }
-        //check for yahtzee bonus
-        checkYahtzeeBonus(diceValues);
         return score;
     }
 
@@ -51,8 +43,6 @@ class ScoreLogic{
                 score += 2;
             }
         }
-        //check for yahtzee bonus
-        checkYahtzeeBonus(diceValues);
 
         return score;
     }
@@ -65,9 +55,6 @@ class ScoreLogic{
                 score += 3;
             }
         }
-        //check for yahtzee bonus
-        checkYahtzeeBonus(diceValues);
-
         return score;
     }
     /*Score fours*/
@@ -78,8 +65,6 @@ class ScoreLogic{
                 score += 4;
             }
         }
-        //check for yahtzee bonus
-        checkYahtzeeBonus(diceValues);
         
         return score;
     }
@@ -91,8 +76,6 @@ class ScoreLogic{
                 score += 5;
             }
         }
-        //check for yahtzee bonus
-        checkYahtzeeBonus(diceValues);
 
         return score;
     }
@@ -104,8 +87,6 @@ class ScoreLogic{
                 score += 6;
             }
         }
-        //check for yahtzee bonus
-        checkYahtzeeBonus(diceValues);
         return score;
     }
     /*Score three of a kind*/
@@ -122,8 +103,6 @@ class ScoreLogic{
                 }
             }
         }
-        //check for yahtzee bonus
-        checkYahtzeeBonus(diceValues);
         return score;
     }
     /*Score four of a kind*/
@@ -140,8 +119,6 @@ class ScoreLogic{
                 }
             }
         }
-        //check for yahtzee bonus
-        checkYahtzeeBonus(diceValues);
         return score;
     }
     /*Score full house*/
@@ -164,9 +141,8 @@ class ScoreLogic{
         if(threeOfAKind == true && twoOfAKind == true){
             score = 25;
         }
-        if(yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
+        if(scoreYahtzee(diceValues) == 50){
             score = 25;
-            yahtzeeBonus += 100;
         }
         return score;
     }
@@ -174,21 +150,50 @@ class ScoreLogic{
         public int scoreSmallStraight(int[] diceValues){
         int score = 0;
         
-        //TODO: Hashmap, check 1-4, 2-5, 3-6
+        //HashMap to check 1-4, 2-5, 3-6
+        HashMap<Integer, Integer> diceCount = new HashMap<Integer, Integer>();   
         
-        if(yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
+        for(int i = 0; i < 5; i++){
+            diceCount.put(diceValues[i], diceCount.getOrDefault(diceCount, 1));
+        }
+
+        if(diceCount.containsKey(1) && diceCount.containsKey(2) && diceCount.containsKey(3) && diceCount.containsKey(4)){
             score = 30;
-            yahtzeeBonus += 100;
+        }
+
+        if(diceCount.containsKey(2) && diceCount.containsKey(3) && diceCount.containsKey(4) && diceCount.containsKey(5)){
+            score = 30;
+        }
+
+        if(diceCount.containsKey(3) && diceCount.containsKey(4) && diceCount.containsKey(5) && diceCount.containsKey(6)){
+            score = 30;
+        }
+        
+        if(scoreYahtzee(diceValues) == 50){
+            score = 30;
         }
         return score;
     }
     /*Score large straight*/
         public int scoreLargeStraight(int[] diceValues){
         int score = 0;
-        //TODO: Hashmap, check 1-5, 2-6
-        if(yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
+        
+        //HashMap, check 1-5, 2-6
+        HashMap<Integer, Integer> diceCount = new HashMap<Integer, Integer>();
+        for(int i = 0; i < 5; i++){
+            diceCount.put(diceValues[i], diceCount.getOrDefault(diceCount, 0) + 1);
+        }
+
+        if(diceCount.containsKey(1) && diceCount.containsKey(2) && diceCount.containsKey(3) && diceCount.containsKey(4) && diceCount.containsKey(5)){
             score = 40;
-            yahtzeeBonus += 100;
+        }
+
+        if(diceCount.containsKey(2) && diceCount.containsKey(3) && diceCount.containsKey(4) && diceCount.containsKey(5) && diceCount.containsKey(6)){
+            score = 40;
+        }
+
+        if(scoreYahtzee(diceValues) == 50){
+            score = 40;
         }
         return score;
     }
@@ -202,8 +207,6 @@ class ScoreLogic{
         for(int i = 0; i < 6; i++){
             if(diceCount[i] == 5){
                 score = 50;
-                //increment yahtzee count
-                yahtzeeCount++;
             }
         }
         return score;
@@ -219,7 +222,7 @@ class ScoreLogic{
 
 
     /*Total Score Calculation */
-    public int totalScore(int[] scoreValues){
+    public int totalScore(int[] scoreValues, int yahtzeeCount){
         int total = 0;
         for(int i = 0; i < 13; i++){
             total += scoreValues[i];
@@ -228,18 +231,14 @@ class ScoreLogic{
                 total += 35;
             }
         }
+        //decrement yahtzee count by 1 (to show bonus)
+        yahtzeeCount--;
 
         //yahtzee bonus
-        total += yahtzeeBonus;
+        total += yahtzeeCount * 100;
 
         return total;
-    }
-
-    private void checkYahtzeeBonus(int[] diceValues){
-        if(scoreYahtzee(diceValues) == 50){
-            yahtzeeBonus += 100;
-        }
-    }      
+    }    
 }
 
 class Game extends JFrame{
@@ -253,8 +252,7 @@ class Game extends JFrame{
 
     private boolean[] scoreButtons = new boolean[13]; //for score buttons
 
-
-
+    int yahtzeeCount = 0; //for yahtzee count
 
     //GUI COMPONENTS
     private JFrame frame;
@@ -504,6 +502,9 @@ class Game extends JFrame{
                 //create a new score object
                 score = new ScoreLogic();
 
+                //reset yahtzee count
+                yahtzeeCount = 0;
+
                 //reset the score buttons text 
                 onesButton.setText("");
                 twosButton.setText("");
@@ -636,6 +637,9 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
+
                 handleEndTurn();
             }
         });
@@ -655,6 +659,9 @@ class Game extends JFrame{
 
                 //increment turns
                 turns++;
+
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
 
                 handleEndTurn();
             
@@ -677,6 +684,9 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
+
                 handleEndTurn();
             
             }
@@ -697,6 +707,9 @@ class Game extends JFrame{
 
                 //increment turns
                 turns++;
+
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
 
                 handleEndTurn();
             
@@ -719,6 +732,9 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
+
                 handleEndTurn();
             
             }
@@ -740,6 +756,9 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
+
                 handleEndTurn();
             
             }
@@ -760,6 +779,9 @@ class Game extends JFrame{
 
                 //increment turns
                 turns++;
+
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
 
                 handleEndTurn();
 
@@ -783,6 +805,9 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
+
                 handleEndTurn();
             
             }
@@ -803,6 +828,9 @@ class Game extends JFrame{
 
                 //increment turns
                 turns++;
+
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
 
                 handleEndTurn();
             
@@ -825,6 +853,9 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
+
                 handleEndTurn();
             
             }
@@ -846,6 +877,9 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
+
                 handleEndTurn();
             
             }
@@ -866,6 +900,9 @@ class Game extends JFrame{
     
                     //increment turns
                     turns++;
+
+                    //increment yahtzee count
+                    yahtzeeCount++;
     
                     handleEndTurn();
             
@@ -1228,7 +1265,7 @@ class Game extends JFrame{
         //check if the game is over
         if(turns == 13){
             //calculate the total score
-            int total = score.totalScore(scoreValues);
+            int total = score.totalScore(scoreValues, yahtzeeCount);
 
             //disable the roll dice button
             rollDice.setEnabled(false);
@@ -1308,6 +1345,12 @@ class Game extends JFrame{
             chanceButton.setText(Integer.toString(score.scoreChance(diceValues)));
             //Set the text Color
             chanceButton.setForeground(red);
+        }
+    }
+
+    private void checkYahtzee(){
+        if(score.scoreYahtzee(diceValues) == 50){
+            yahtzeeCount++;
         }
     }
 
