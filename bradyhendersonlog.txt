@@ -1,0 +1,8 @@
+For this project, I primarily worked on the GUI, and the overall user experience when playing our Yahtzee Game.
+
+Specific Contributions
+    - Picked the color scheme for the application
+    - Created the init() function, which initializes and creates all swing/GUI components (Except for Rules)
+    - Created all Action Listener functions for each respective button
+    - Handled the layout of the components
+    - Created functions show(), Game(), mainMenu(), gameScreen(), toggleScoreButtonsOff(), toggleScoreButtonsOn(), resetButtonText(), handleEndTurn(), showScore(), checkYahtzee()
