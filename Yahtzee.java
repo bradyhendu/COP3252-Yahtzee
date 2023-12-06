@@ -151,7 +151,7 @@ class ScoreLogic{
         if(threeOfAKind == true && twoOfAKind == true){
             score = 25;
         }
-        if(yahtzeeCount >= 1 && scoreYahtzee(diceValues) == 50){
+        if(yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
             score = 25;
         }
         return score;
@@ -179,7 +179,7 @@ class ScoreLogic{
             score = 30;
         }
         
-        if(yahtzeeCount >= 1 && scoreYahtzee(diceValues) == 50){
+        if(yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
             score = 30;
         }
         return score;
@@ -202,7 +202,7 @@ class ScoreLogic{
             score = 40;
         }
 
-        if(yahtzeeCount >= 1 && scoreYahtzee(diceValues) == 50){
+        if(yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
             score = 40;
         }
         return score;
@@ -474,7 +474,7 @@ class Game extends JFrame{
                 //show available scores
                 showScore();
 
-                
+                //if the roll count is 3, disable the roll dice button
                 if(rollCount == 3){
                     rollDice.setEnabled(false);
                     //Set Text of Roll Dice Button
@@ -636,6 +636,9 @@ class Game extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
+
                 //add the score to the scoreValues array
                 scoreValues[0] = score.scoreOnes(diceValues);
 
@@ -648,9 +651,6 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                //check to see if the roll scored was a yahtzee, then increment the count if it is
-                checkYahtzee();
-
                 handleEndTurn();
             }
         });
@@ -658,6 +658,9 @@ class Game extends JFrame{
         twosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
 
                 //add the score to the scoreValues array
                 scoreValues[1] = score.scoreTwos(diceValues);
@@ -671,9 +674,6 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                //check to see if the roll scored was a yahtzee, then increment the count if it is
-                checkYahtzee();
-
                 handleEndTurn();
             
             }
@@ -682,6 +682,9 @@ class Game extends JFrame{
         threesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
 
                 //add the score to the scoreValues array
                 scoreValues[2] = score.scoreThrees(diceValues);
@@ -695,17 +698,16 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                //check to see if the roll scored was a yahtzee, then increment the count if it is
-                checkYahtzee();
-
-                handleEndTurn();
-            
+                handleEndTurn();           
             }
         });
 
         foursButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
 
                 //add the score to the scoreValues array
                 scoreValues[3] = score.scoreFours(diceValues);
@@ -719,9 +721,6 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                //check to see if the roll scored was a yahtzee, then increment the count if it is
-                checkYahtzee();
-
                 handleEndTurn();
             
             }
@@ -730,6 +729,9 @@ class Game extends JFrame{
         fivesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
 
                 //add the score to the scoreValues array
                 scoreValues[4] = score.scoreFives(diceValues);
@@ -743,9 +745,6 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                //check to see if the roll scored was a yahtzee, then increment the count if it is
-                checkYahtzee();
-
                 handleEndTurn();
             
             }
@@ -754,6 +753,9 @@ class Game extends JFrame{
         sixesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
 
                 //add the score to the scoreValues array
                 scoreValues[5] = score.scoreSixes(diceValues);
@@ -767,17 +769,16 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                //check to see if the roll scored was a yahtzee, then increment the count if it is
-                checkYahtzee();
-
-                handleEndTurn();
-            
+                handleEndTurn();        
             }
         });
 
         threeOfAKindButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
 
                 //add the score to the scoreValues array
                 scoreValues[6] = score.scoreThreeOfAKind(diceValues);
@@ -791,18 +792,16 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                //check to see if the roll scored was a yahtzee, then increment the count if it is
-                checkYahtzee();
-
                 handleEndTurn();
-
-            
             }
         });
 
         fourOfAKindButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
 
                 //add the score to the scoreValues array
                 scoreValues[7] = score.scoreFourOfAKind(diceValues);
@@ -816,17 +815,16 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                //check to see if the roll scored was a yahtzee, then increment the count if it is
-                checkYahtzee();
-
-                handleEndTurn();
-            
+                handleEndTurn();            
             }
         });
 
         fullHouseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
 
                 //add the score to the scoreValues array
                 scoreValues[8] = score.scoreFullHouse(diceValues);
@@ -840,9 +838,6 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                //check to see if the roll scored was a yahtzee, then increment the count if it is
-                checkYahtzee();
-
                 handleEndTurn();
             
             }
@@ -852,6 +847,8 @@ class Game extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
                 //add the score to the scoreValues array
                 scoreValues[9] = score.scoreSmallStraight(diceValues);
 
@@ -864,17 +861,15 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                //check to see if the roll scored was a yahtzee, then increment the count if it is
-                checkYahtzee();
-
-                handleEndTurn();
-            
+                handleEndTurn(); 
             }
         });
 
         largeStraightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //check to see if the roll scored was a yahtzee, then increment the count if it is
+                checkYahtzee();
 
                 //add the score to the scoreValues array
                 scoreValues[10] = score.scoreLargeStraight(diceValues);
@@ -888,9 +883,6 @@ class Game extends JFrame{
                 //increment turns
                 turns++;
 
-                //check to see if the roll scored was a yahtzee, then increment the count if it is
-                checkYahtzee();
-
                 handleEndTurn();
             
             }
@@ -899,23 +891,26 @@ class Game extends JFrame{
         yahtzeeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    
-                    //add the score to the scoreValues array
-                    scoreValues[11] = score.scoreYahtzee(diceValues);
-    
-                    //change the text of the button to the score
-                    yahtzeeButton.setText(Integer.toString(scoreValues[11]));
-    
-                    //disable the buttons
-                    scoreButtons[11] = true;
-    
-                    //increment turns
-                    turns++;
 
-                    //increment yahtzee count
-                    yahtzeeCount++;
+                //add 1 to the yahtzee count
+                yahtzeeCount++;
+                score.setYahtzeeCount(yahtzeeCount);
+
+                    
+                //add the score to the scoreValues array
+                scoreValues[11] = score.scoreYahtzee(diceValues);
     
-                    handleEndTurn();
+                //change the text of the button to the score
+                yahtzeeButton.setText(Integer.toString(scoreValues[11]));
+    
+                //disable the buttons
+                scoreButtons[11] = true;
+    
+                //increment turns
+                turns++;
+
+    
+                handleEndTurn();
             
             }
         });
@@ -923,6 +918,9 @@ class Game extends JFrame{
         chanceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                //check yahtzee
+                checkYahtzee();
 
                 //add the score to the scoreValues array
                 scoreValues[12] = score.scoreChance(diceValues);
@@ -935,6 +933,7 @@ class Game extends JFrame{
 
                 //increment turns
                 turns++;
+
 
                 handleEndTurn();
             
@@ -1276,7 +1275,7 @@ class Game extends JFrame{
         //check if the game is over
         if(turns == 13){
             //calculate the total score
-            int total = score.totalScore(scoreValues, yahtzeeCount);
+            int total = score.totalScore(scoreValues);
 
             //disable the roll dice button
             rollDice.setEnabled(false);
