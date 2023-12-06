@@ -1359,6 +1359,7 @@ class Game extends JFrame{
         }
     }
 
+    //Checks for a yahtzee when you submit the dice for scoring, used for bonus checking
     private void checkYahtzee(){
         if(score.scoreYahtzee(diceValues) == 50){
             yahtzeeCount++;
