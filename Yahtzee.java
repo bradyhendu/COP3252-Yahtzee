@@ -23,6 +23,16 @@ public class Yahtzee{
 }
 
 class ScoreLogic{
+    int yahtzeeCount = 0;
+
+    public ScoreLogic(){
+        yahtzeeCount = 0;
+    }
+
+    /*Set yahtzeeCount */
+    public void setYahtzeeCount(int count){
+        yahtzeeCount = count;
+    }
 
     /*Score Ones*/
     public int scoreOnes(int[] diceValues){
@@ -141,7 +151,7 @@ class ScoreLogic{
         if(threeOfAKind == true && twoOfAKind == true){
             score = 25;
         }
-        if(scoreYahtzee(diceValues) == 50){
+        if(yahtzeeCount >= 1 && scoreYahtzee(diceValues) == 50){
             score = 25;
         }
         return score;
@@ -169,7 +179,7 @@ class ScoreLogic{
             score = 30;
         }
         
-        if(scoreYahtzee(diceValues) == 50){
+        if(yahtzeeCount >= 1 && scoreYahtzee(diceValues) == 50){
             score = 30;
         }
         return score;
@@ -192,7 +202,7 @@ class ScoreLogic{
             score = 40;
         }
 
-        if(scoreYahtzee(diceValues) == 50){
+        if(yahtzeeCount >= 1 && scoreYahtzee(diceValues) == 50){
             score = 40;
         }
         return score;
@@ -222,7 +232,7 @@ class ScoreLogic{
 
 
     /*Total Score Calculation */
-    public int totalScore(int[] scoreValues, int yahtzeeCount){
+    public int totalScore(int[] scoreValues){
         int total = 0;
         for(int i = 0; i < 13; i++){
             total += scoreValues[i];
@@ -1352,6 +1362,7 @@ class Game extends JFrame{
     private void checkYahtzee(){
         if(score.scoreYahtzee(diceValues) == 50){
             yahtzeeCount++;
+            score.setYahtzeeCount(yahtzeeCount);
         }
     }
 
