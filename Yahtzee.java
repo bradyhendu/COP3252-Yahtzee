@@ -25,6 +25,11 @@ class ScoreLogic{
     int yahtzeeBonus = 0;
     int yahtzeeCount = 0;
 
+    ScoreLogic(){
+        yahtzeeBonus = 0;
+        yahtzeeCount = 0;
+    }
+
     /*Score Ones*/
     public int scoreOnes(int[] diceValues){
         int score = 0;
@@ -33,6 +38,8 @@ class ScoreLogic{
                 score += 1;
             }
         }
+        //check for yahtzee bonus
+        checkYahtzeeBonus(diceValues);
         return score;
     }
 
@@ -44,6 +51,9 @@ class ScoreLogic{
                 score += 2;
             }
         }
+        //check for yahtzee bonus
+        checkYahtzeeBonus(diceValues);
+
         return score;
     }
 
@@ -55,6 +65,9 @@ class ScoreLogic{
                 score += 3;
             }
         }
+        //check for yahtzee bonus
+        checkYahtzeeBonus(diceValues);
+
         return score;
     }
     /*Score fours*/
@@ -65,6 +78,9 @@ class ScoreLogic{
                 score += 4;
             }
         }
+        //check for yahtzee bonus
+        checkYahtzeeBonus(diceValues);
+        
         return score;
     }
     /*Score fives*/
@@ -75,6 +91,9 @@ class ScoreLogic{
                 score += 5;
             }
         }
+        //check for yahtzee bonus
+        checkYahtzeeBonus(diceValues);
+
         return score;
     }
     /*Score sixes*/
@@ -85,6 +104,8 @@ class ScoreLogic{
                 score += 6;
             }
         }
+        //check for yahtzee bonus
+        checkYahtzeeBonus(diceValues);
         return score;
     }
     /*Score three of a kind*/
@@ -101,6 +122,8 @@ class ScoreLogic{
                 }
             }
         }
+        //check for yahtzee bonus
+        checkYahtzeeBonus(diceValues);
         return score;
     }
     /*Score four of a kind*/
@@ -117,6 +140,8 @@ class ScoreLogic{
                 }
             }
         }
+        //check for yahtzee bonus
+        checkYahtzeeBonus(diceValues);
         return score;
     }
     /*Score full house*/
@@ -148,19 +173,9 @@ class ScoreLogic{
     /*Score small straight*/
         public int scoreSmallStraight(int[] diceValues){
         int score = 0;
-        int[] diceCount = new int[6];
-        for(int i = 0; i < 5; i++){
-            diceCount[diceValues[i] - 1]++;
-        }
-        int count = 0;
-        for(int i = 0; i < 6; i++){
-            if(diceCount[i] >= 1){
-                count++;
-            }
-        }
-        if(count >= 4){
-            score = 30;
-        }
+        
+        //TODO: Hashmap, check 1-4, 2-5, 3-6
+        
         if(yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
             score = 30;
             yahtzeeBonus += 100;
@@ -170,19 +185,7 @@ class ScoreLogic{
     /*Score large straight*/
         public int scoreLargeStraight(int[] diceValues){
         int score = 0;
-        int[] diceCount = new int[6];
-        for(int i = 0; i < 5; i++){
-            diceCount[diceValues[i] - 1]++;
-        }
-        int count = 0;
-        for(int i = 0; i < 6; i++){
-            if(diceCount[i] >= 1){
-                count++;
-            }
-        }
-        if(count == 5){
-            score = 40;
-        }
+        //TODO: Hashmap, check 1-5, 2-6
         if(yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
             score = 40;
             yahtzeeBonus += 100;
@@ -231,7 +234,12 @@ class ScoreLogic{
 
         return total;
     }
-        
+
+    private void checkYahtzeeBonus(int[] diceValues){
+        if(scoreYahtzee(diceValues) == 50){
+            yahtzeeBonus += 100;
+        }
+    }      
 }
 
 class Game extends JFrame{
@@ -303,7 +311,7 @@ class Game extends JFrame{
     private void init(){
         /*Frame*/
         frame = new JFrame("Yahtzee");
-        frame.setSize(1000, 800);
+        frame.setSize(1000, 700);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*End Frame*/
@@ -316,7 +324,18 @@ class Game extends JFrame{
 
         /* Start Button and Rule Button*/
         rulesButton = new JButton("Rules");
+        //Style the button
+        rulesButton.setBackground(Color.BLACK); // Set Background color
+        rulesButton.setForeground(Color.WHITE); // Set text color
+        //set focus paint to false
+        rulesButton.setFocusPainted(false);
+
         startButton = new JButton("Play Game");
+        //Style the button
+        startButton.setBackground(Color.BLACK); // Set Background color
+        startButton.setForeground(Color.WHITE); // Set text color
+        //set focus paint to false
+        startButton.setFocusPainted(false);
 
         startButton.addActionListener(new ActionListener() {
             @Override
@@ -411,6 +430,13 @@ class Game extends JFrame{
 
         /*Roll Dice Button*/
         rollDice = new JButton("Roll Dice");
+        //Style the button
+        rollDice.setBackground(red); // Set Background color
+        rollDice.setForeground(Color.WHITE); // Set text color
+        //set focus paint to false
+        rollDice.setFocusPainted(false);
+
+
         rollDice.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -434,6 +460,12 @@ class Game extends JFrame{
 
                 rollCount++;
 
+                //reset the score button text
+                resetButtonText();
+
+                //show available scores
+                showScore();
+
                 if(rollCount == 3){
                     rollDice.setEnabled(false);
                     //Set Text of Roll Dice Button
@@ -449,6 +481,11 @@ class Game extends JFrame{
 
         /*Reset Game Button*/
         resetGameButton = new JButton("Restart Game");
+        //Style the button
+        resetGameButton.setBackground(red); // Set Background color
+        resetGameButton.setForeground(Color.WHITE); // Set text color
+        //set focus paint to false
+        resetGameButton.setFocusPainted(false);
         resetGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -468,19 +505,19 @@ class Game extends JFrame{
                 score = new ScoreLogic();
 
                 //reset the score buttons text 
-                onesButton.setText("Score");
-                twosButton.setText("Score");
-                threesButton.setText("Score");
-                foursButton.setText("Score");
-                fivesButton.setText("Score");
-                sixesButton.setText("Score");
-                threeOfAKindButton.setText("Score");
-                fourOfAKindButton.setText("Score");
-                fullHouseButton.setText("Score");
-                smallStraightButton.setText("Score");
-                largeStraightButton.setText("Score");
-                yahtzeeButton.setText("Score");
-                chanceButton.setText("Score");
+                onesButton.setText("");
+                twosButton.setText("");
+                threesButton.setText("");
+                foursButton.setText("");
+                fivesButton.setText("");
+                sixesButton.setText("");
+                threeOfAKindButton.setText("");
+                fourOfAKindButton.setText("");
+                fullHouseButton.setText("");
+                smallStraightButton.setText("");
+                largeStraightButton.setText("");
+                yahtzeeButton.setText("");
+                chanceButton.setText("");
 
                 //reset turns
                 turns = 0;
@@ -506,55 +543,81 @@ class Game extends JFrame{
         // Create the labels and buttons
         JLabel onesLabel = new JLabel("Ones");
         onesLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        onesButton = new JButton("Score");
+        onesButton = new JButton("");
+        //set background color to white
+        onesButton.setBackground(Color.WHITE);
 
         JLabel twosLabel = new JLabel("Twos");
         twosLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        twosButton = new JButton("Score");
+        twosButton = new JButton("");
+        //set background color to white
+        twosButton.setBackground(Color.WHITE);
 
         JLabel threesLabel = new JLabel("Threes");
         threesLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        threesButton = new JButton("Score");
+        threesButton = new JButton("");
+        //set background color to white
+        threesButton.setBackground(Color.WHITE);
 
         JLabel foursLabel = new JLabel("Fours");
         foursLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        foursButton = new JButton("Score");
+        foursButton = new JButton("");
+        //set background color to white
+        foursButton.setBackground(Color.WHITE);
 
         JLabel fivesLabel = new JLabel("Fives");
         fivesLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        fivesButton = new JButton("Score");
+        fivesButton = new JButton("");
+        //set background color to white
+        fivesButton.setBackground(Color.WHITE);
 
         JLabel sixesLabel = new JLabel("Sixes");
         sixesLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        sixesButton = new JButton("Score");
+        sixesButton = new JButton("");
+        //set background color to white
+        sixesButton.setBackground(Color.WHITE);
 
         JLabel threeOfAKindLabel = new JLabel("Three of a Kind");
         threeOfAKindLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        threeOfAKindButton = new JButton("Score");
+        threeOfAKindButton = new JButton("");
+        //set background color to white
+        threeOfAKindButton.setBackground(Color.WHITE);
 
         JLabel fourOfAKindLabel = new JLabel("Four of a Kind");
         fourOfAKindLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        fourOfAKindButton = new JButton("Score");
+        fourOfAKindButton = new JButton("");
+        //set background color to white
+        fourOfAKindButton.setBackground(Color.WHITE);
 
         JLabel fullHouseLabel = new JLabel("Full House");
         fullHouseLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        fullHouseButton = new JButton("Score");
+        fullHouseButton = new JButton("");
+        //set background color to white
+        fullHouseButton.setBackground(Color.WHITE);
 
         JLabel smallStraightLabel = new JLabel("Small Straight");
         smallStraightLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        smallStraightButton = new JButton("Score");
+        smallStraightButton = new JButton("");
+        //set background color to white
+        smallStraightButton.setBackground(Color.WHITE);
 
         JLabel largeStraightLabel = new JLabel("Large Straight");
         largeStraightLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        largeStraightButton = new JButton("Score");
+        largeStraightButton = new JButton("");
+        //set background color to white
+        largeStraightButton.setBackground(Color.WHITE);
 
         JLabel yahtzeeLabel = new JLabel("Yahtzee");
         yahtzeeLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        yahtzeeButton = new JButton("Score");
+        yahtzeeButton = new JButton("");
+        //set background color to white
+        yahtzeeButton.setBackground(Color.WHITE);
 
         JLabel chanceLabel = new JLabel("Chance");
         chanceLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        chanceButton = new JButton("Score");
+        chanceButton = new JButton("");
+        //set background color to white
+        chanceButton.setBackground(Color.WHITE);
 
         // Add action listeners to buttons, calls the score method from game logic
         onesButton.addActionListener(new ActionListener() {
@@ -923,7 +986,7 @@ class Game extends JFrame{
         //The purpose of this wrapper is to give the dice panel a border with better sizing
         diceWrapper = new JPanel();
         diceWrapper.setBackground(red);
-        diceWrapper.setBorder(new EmptyBorder(400, 50, 0, 50)); // top, left, bottom, right
+        diceWrapper.setBorder(new EmptyBorder(350, 50, 0, 50)); // top, left, bottom, right
         //change size to fit the dice panel
         diceWrapper.setPreferredSize(new Dimension(500, 500));
         diceWrapper.add(dicePanel);
@@ -932,6 +995,9 @@ class Game extends JFrame{
 
         /*Back Button*/
         backButton = new JButton("Back to Main Menu");
+        //Style the button
+        backButton.setBackground(red); // Set Background color
+        backButton.setForeground(Color.WHITE); // Set text color
         //add action listener to button
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -1097,9 +1163,53 @@ class Game extends JFrame{
         }
     }
 
+    //Reset button text on click
+    private void resetButtonText(){
+        if(scoreButtons[0] == false){
+            onesButton.setText("");
+        }
+        if(scoreButtons[1] == false){
+            twosButton.setText("");
+        }
+        if(scoreButtons[2] == false){
+            threesButton.setText("");
+        }
+        if(scoreButtons[3] == false){
+            foursButton.setText("");
+        }
+        if(scoreButtons[4] == false){
+            fivesButton.setText("");
+        }
+        if(scoreButtons[5] == false){
+            sixesButton.setText("");
+        }
+        if(scoreButtons[6] == false){
+            threeOfAKindButton.setText("");
+        }
+        if(scoreButtons[7] == false){
+            fourOfAKindButton.setText("");
+        }
+        if(scoreButtons[8] == false){
+            fullHouseButton.setText("");
+        }
+        if(scoreButtons[9] == false){
+            smallStraightButton.setText("");
+        }
+        if(scoreButtons[10] == false){
+            largeStraightButton.setText("");
+        }
+        if(scoreButtons[11] == false){
+            yahtzeeButton.setText("");
+        }
+        if(scoreButtons[12] == false){
+            chanceButton.setText("");
+        }
+    }
+
     //Handle Buttons on Scoring or Reset
     private void handleEndTurn(){
         toggleScoreButtonsOff();
+        resetButtonText();
 
         //reset the roll count
         rollCount = 0;
@@ -1131,6 +1241,74 @@ class Game extends JFrame{
         //redraw the panel
         frame.revalidate();
         panel.repaint();
+    }
+
+    private void showScore(){
+        if(score.scoreOnes(diceValues) != 0 && scoreButtons[0] == false){
+            onesButton.setText(Integer.toString(score.scoreOnes(diceValues)));
+            //Set the text Color
+            onesButton.setForeground(red);
+        }
+        if(score.scoreTwos(diceValues) != 0 && scoreButtons[1] == false){
+            twosButton.setText(Integer.toString(score.scoreTwos(diceValues)));
+            //Set the text Color
+            twosButton.setForeground(red);
+        }
+        if(score.scoreThrees(diceValues) != 0 && scoreButtons[2] == false){
+            threesButton.setText(Integer.toString(score.scoreThrees(diceValues)));
+            //Set the text Color
+            threesButton.setForeground(red);
+        }
+        if(score.scoreFours(diceValues) != 0 && scoreButtons[3] == false){
+            foursButton.setText(Integer.toString(score.scoreFours(diceValues)));
+            //Set the text Color
+            foursButton.setForeground(red);
+        }
+        if(score.scoreFives(diceValues) != 0 && scoreButtons[4] == false){
+            fivesButton.setText(Integer.toString(score.scoreFives(diceValues)));
+            //Set the text Color 
+            fivesButton.setForeground(red);
+        }
+        if(score.scoreSixes(diceValues) != 0 && scoreButtons[5] == false){
+            sixesButton.setText(Integer.toString(score.scoreSixes(diceValues)));
+            //Set the text Color 
+            sixesButton.setForeground(red);
+        }
+        if(score.scoreThreeOfAKind(diceValues) != 0 && scoreButtons[6] == false){
+            threeOfAKindButton.setText(Integer.toString(score.scoreThreeOfAKind(diceValues)));
+            //Set the text Color
+            threeOfAKindButton.setForeground(red);
+        }
+        if(score.scoreFourOfAKind(diceValues) != 0 && scoreButtons[7] == false){
+            fourOfAKindButton.setText(Integer.toString(score.scoreFourOfAKind(diceValues)));
+            //Set the text Color
+            fourOfAKindButton.setForeground(red);
+        }
+        if(score.scoreFullHouse(diceValues) != 0 && scoreButtons[8] == false){
+            fullHouseButton.setText(Integer.toString(score.scoreFullHouse(diceValues)));
+            //Set the text Color
+            fullHouseButton.setForeground(red);
+        }
+        if(score.scoreSmallStraight(diceValues) != 0 && scoreButtons[9] == false){
+            smallStraightButton.setText(Integer.toString(score.scoreSmallStraight(diceValues)));
+            //Set the text Color
+            smallStraightButton.setForeground(red);
+        }
+        if(score.scoreLargeStraight(diceValues) != 0 && scoreButtons[10] == false){
+            largeStraightButton.setText(Integer.toString(score.scoreLargeStraight(diceValues)));
+            //Set the text Color 
+            largeStraightButton.setForeground(red);
+        }
+        if(score.scoreYahtzee(diceValues) != 0 && scoreButtons[11] == false){
+            yahtzeeButton.setText(Integer.toString(score.scoreYahtzee(diceValues)));
+            //Set the text Color
+            yahtzeeButton.setForeground(red);
+        }
+        if(score.scoreChance(diceValues) != 0 && scoreButtons[12] == false){
+            chanceButton.setText(Integer.toString(score.scoreChance(diceValues)));
+            //Set the text Color
+            chanceButton.setForeground(red);
+        }
     }
 
 }
