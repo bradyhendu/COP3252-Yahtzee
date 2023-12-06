@@ -391,8 +391,7 @@ class Game extends JFrame{
         /*Image Label*/
         try {
            // Read the image file
-           File imageFile = new File("Yahtzee-logo.png");
-           BufferedImage originalImage = ImageIO.read(imageFile);
+           BufferedImage originalImage = ImageIO.read(getClass().getResource("Yahtzee-logo.png"));
 
            Image image = originalImage.getScaledInstance(600, 400, Image.SCALE_DEFAULT);
 
@@ -413,8 +412,7 @@ class Game extends JFrame{
         for(int i = 0; i < 6; i++){
             //Read the image file as follows: dice-i.png where i is the current index
             try {
-                File imageFile = new File("dice-" + (i + 1) + ".png");
-                BufferedImage originalImage = ImageIO.read(imageFile);
+                BufferedImage originalImage = ImageIO.read(getClass().getResource("dice-" + (i + 1) + ".png"));
 
                 Image image = originalImage.getScaledInstance(75, 75, Image.SCALE_DEFAULT);
 
