@@ -41,10 +41,6 @@ class ScoreLogic{
                 score += 1;
             }
         }
-
-        if(score != 0 && yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
-            yahtzeeBonus += 100;
-        }
         
         return score;
     }
@@ -68,10 +64,6 @@ class ScoreLogic{
             if(diceValues[i] == 3){
                 score += 3;
             }
-        }
-
-        if(score != 0 && yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
-            yahtzeeBonus += 100;
         }
 
         return score;
@@ -106,9 +98,6 @@ class ScoreLogic{
                 score += 6;
             }
         }
-        if(score != 0 && yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
-            yahtzeeBonus += 100;
-        }
         return score;
     }
     /*Score three of a kind*/
@@ -125,9 +114,6 @@ class ScoreLogic{
                 }
             }
         }
-        if(yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
-            yahtzeeBonus += 100;
-        }
         return score;
     }
     /*Score four of a kind*/
@@ -143,9 +129,6 @@ class ScoreLogic{
                     score += diceValues[j];
                 }
             }
-        }
-        if(yahtzeeCount > 0 && scoreYahtzee(diceValues) == 50){
-            yahtzeeBonus += 100;
         }
         return score;
     }
